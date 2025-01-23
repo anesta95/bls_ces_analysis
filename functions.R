@@ -68,27 +68,26 @@ make_chart_title <- function(viz_df, viz_title) {
 ## Data gathering functions ##
 # Function to retrieve data from FRED API
 get_fred_data <- function(series_id, api_key) {
-  fred_res <- GET(url = paste0("https://api.stlouisfed.org/fred/series/observations?series_id=",
-                               series_id,
-                               "&api_key=", api_key))
+  # API doc reference: https://fred.stlouisfed.org/docs/api/fred/series_observations.html
+  fred_res <- GET(
+    url = paste0(
+      "https://api.stlouisfed.org/fred/series/observations?series_id=",
+      series_id, "&api_key=", api_key, "&file_type=json"
+    )
+  )
   
   stop_for_status(fred_res)
   
-  fred_content <- content(fred_res)
+  fred_content <- content(fred_res, 
+                          as = "parsed", 
+                          type = "application/json",
+                          encoding = "UTF-8")
   
-  fred_data <- tibble(
-    date = base::as.Date(fred_content %>% 
-                           xml_children() %>% 
-                           xml_attr("date")),
-    value = fred_content %>% 
-      xml_children() %>% 
-      xml_attr("value")
-  ) %>% 
-    mutate(value = if_else(value == ".", NA_real_, as.double(value))) %>% 
-    filter(!is.na(value))
+  fred_observations <- fred_content$observations
   
-  ## Look into why warning level changed in .RData file:
-  ## https://stackoverflow.com/questions/72754423/how-to-solve-error-converted-from-warning
+  fred_data <- bind_rows(fred_observations) %>% 
+    mutate(across(matches("realtime|date"), base::as.Date),
+           value = as.double(value))
   
   return(fred_data)
   

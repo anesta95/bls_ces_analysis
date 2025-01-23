@@ -1,8 +1,6 @@
 library(httr)
 library(readr)
-library(tibble)
 library(dplyr)
-library(xml2)
 
 # Importing R file with custom functions
 source("functions.R")
