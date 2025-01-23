@@ -29,11 +29,14 @@ make_metadata_vec <- function(df) {
 }
 
 # Function to get average value from a vector of numeric data types
-get_avg_col_val <- function(df, dts) {
+get_avg_col_val <- function(df, dts, val_col) {
+  
+  val_col_name <- enquo(val_col)
+  
   avg <- df %>% 
     filter(date %nin% dts) %>% 
-    pull(value) %>% 
-    mean()
+    pull(!!val_col_name) %>% 
+    mean(na.rm = T)
   
   return(avg)
 }
@@ -206,7 +209,7 @@ scatter_theme <- function() {
 
 # Function to make the dual current and trailing three-month average
 # line time-series plots.
-make_ts_trail_three_chart <- function(viz_df, avg_line, x_col, 
+make_ts_two_line_chart <- function(viz_df, avg_line, x_col, 
                                       y_col_one, y_col_two,
                                       viz_title = NULL, viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
@@ -223,7 +226,7 @@ make_ts_trail_three_chart <- function(viz_df, avg_line, x_col,
   # Creating final viz caption
   viz_caption_full <- str_replace(viz_caption, "MMM. 'YY", latest_date_str)
   
-  annotate_offset <- (max(viz_df$value) - min(viz_df$value)) / 18
+  annotate_offset <- (max(pull(viz_df, !!y_col_one_quo)) - min(pull(viz_df, !!y_col_one_quo))) / 18
   
   plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo)) +
     geom_line(mapping = aes(y = !!y_col_one_quo),
@@ -242,14 +245,16 @@ make_ts_trail_three_chart <- function(viz_df, avg_line, x_col,
                linetype = "dashed"
     ) +
     annotate("text", 
-             x = latest_date_dte %m-% months(5), 
+             x = latest_date_dte %m-% months(2), 
              y = avg_line + annotate_offset, 
              label = "Non-recession avg.",
              color = "black",
              size = 5,
              fontface = "bold") +
-    scale_x_date(date_breaks = "1 year", date_labels = "%b. '%y") +
-    scale_y_continuous() +
+    scale_x_date(date_labels = "%b. '%y") +
+    scale_y_continuous(labels = label_percent(scale = 100, 
+                                     suffix = "%", 
+                                     accuracy = 0.1)) +
     labs(
       title = viz_title,
       subtitle = viz_subtitle,
@@ -295,7 +300,7 @@ make_bar <- function(viz_df, x_col, y_col, viz_title = NULL,
   return(plt)
 }
 
-make_yoy_bar <- function(viz_df, x_col, y_col, viz_title = NULL, 
+make_pct_chg_bar <- function(viz_df, x_col, y_col, viz_title = NULL, 
                          viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
@@ -367,7 +372,7 @@ make_cur_map <- function(viz_df, shp_df, fill_col, geo_col,
   
 }
 
-make_yoy_map <- function(viz_df, shp_df, fill_col, geo_col,
+make_pct_chg_map <- function(viz_df, shp_df, fill_col, geo_col,
                          viz_title = NULL, viz_subtitle, 
                          viz_caption) {
   # Joining data tibble with sf tibble that has `geometry` column that can be mapped
