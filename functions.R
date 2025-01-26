@@ -140,7 +140,7 @@ ts_line_theme <- function() {
     theme(
       panel.grid.major.y = element_line(color = "gray", linewidth = 0.3),
       plot.title = element_text(size = 36, face = "bold", color = "black"),
-      plot.margin = margin(20, 30, 20, 20, "pt"),
+      plot.margin = margin(20, 100, 20, 20, "pt"),
       plot.subtitle = element_markdown(size = 24, color = "black"),
       plot.caption = element_text(size = 10, color = "black"),
       axis.text = element_text(size = 18, face = "bold", color = "black"),
@@ -221,14 +221,17 @@ make_ts_two_line_chart <- function(viz_df, avg_line, x_col,
   viz_title <- make_chart_title(viz_df, viz_title)
   
   latest_date_dte <- max(viz_df$date, na.rm = T)
+  earliest_date_dte <- min(viz_df$date, na.rm = T)
+  date_dte_range <- diff(as.numeric(range(viz_df$date, na.rm = T)))
   latest_date_str <- format(latest_date_dte, "%b. '%y")
   
   # Creating final viz caption
   viz_caption_full <- str_replace(viz_caption, "MMM. 'YY", latest_date_str)
   
-  annotate_offset <- (max(pull(viz_df, !!y_col_one_quo)) - min(pull(viz_df, !!y_col_one_quo))) / 18
-  
   plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo)) +
+    coord_cartesian(
+      xlim = c(earliest_date_dte, latest_date_dte),
+      clip = "off") +
     geom_line(mapping = aes(y = !!y_col_one_quo),
               linewidth = 0.8,
               color = "#a6cee3", 
@@ -244,12 +247,13 @@ make_ts_two_line_chart <- function(viz_df, avg_line, x_col,
                linewidth = 0.75,
                linetype = "dashed"
     ) +
-    annotate("text", 
-             x = latest_date_dte %m-% months(2), 
-             y = avg_line + annotate_offset, 
-             label = "Non-recession avg.",
+    annotate("text",
+             x = base::as.Date(as.numeric(latest_date_dte) + (.13 * date_dte_range)),
+             y = avg_line,
+             hjust = 0.5,
+             label = "Non-recession\navg.",
              color = "black",
-             size = 5,
+             size = 3.5,
              fontface = "bold") +
     scale_x_date(date_labels = "%b. '%y") +
     scale_y_continuous(labels = label_percent(scale = 100, 
