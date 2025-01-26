@@ -148,8 +148,13 @@ ces_emp_ttlnf_yoy_momann_viz <- make_ts_two_line_chart(
 )
 
 save_chart(ces_emp_ttlnf_yoy_momann_viz)
-# TODO: Make non-recession average label to the right of the line off the end of the chart
-# TODO: eliminate `annotate_offset` variable
+# TODO: Update `make_ts_two_line_chart` to optionally apply the `coord_cartesian()`,
+# geom_hline(), and annotate() layers if the recession & non-recession averages
+# are in the data range. 
+# TODO: Make `y_col_two` argument (smaller light blue line) optional and only
+# add on the `geom_line()` layer for it if supplied.
+# TODO: Change `get_avg_col_val` function so that it can calculate average
+# for dates supplied _or_ *not* for dates supplied.
 # TODO: Change function so that it applies `scale_y_continuous()` based on function
 # argument specifying if it is dollar label, percentage label, or no label
 # TODO: Try out eliminating the `date_breaks` arguement in `scale_x_date()` to
