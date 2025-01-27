@@ -160,4 +160,54 @@ ces_emp_ttlnf_yoy_momann_viz <- make_ts_line_chart(
 
 save_chart(ces_emp_ttlnf_yoy_momann_viz)
 
-# Average Hourly Earnings year-over-year and month-over-month annualized
+# Average Hourly Earnings for total private year-over-year and month-over-month annualized
+ces_earn_ttlnf_yoy_momann_df <- ces_full %>% 
+  filter(!is.na(date),
+         data_type_code == "03",
+         seasonal_code == "S",
+         industry_code == "05000000"
+  ) %>% 
+  arrange(desc(date)) %>% 
+  mutate(
+    yoy_chg = (value / lead(value, n = 12)) - 1,
+    mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1,
+    val_type_text = "ts_line"
+  ) %>% 
+  select(date, yoy_chg, mom_chg_ann, data_type_text, industry_text, val_type_text)
+
+ces_earn_ttlnf_yoy_momann_last_2_yrs_df <- ces_earn_ttlnf_yoy_momann_df %>% 
+  filter(date >= max(date) %m-% months(24))
+
+econ_csv_write_out(ces_earn_ttlnf_yoy_momann_last_2_yrs_df,
+                   "./data")
+
+ces_earn_ttlnf_yoy_momann_viz <- make_ts_line_chart(
+  viz_df = ces_earn_ttlnf_yoy_momann_last_2_yrs_df,
+  x_col = date,
+  y_col_one = yoy_chg,
+  second_y_col = T,
+  y_col_two = mom_chg_ann,
+  y_data_type = "percentage",
+  viz_title = "Change in Average Hourly Earnings",
+  viz_subtitle = "<b style=\"color: #a6cee3\">Monthly annualized</b> and <b style = \"color: #1f78b4\">yearly</b> for all private sector workers",
+  viz_caption = base_viz_caption
+)
+
+save_chart(ces_earn_ttlnf_yoy_momann_viz)
+
+# TODO: Make month-over-month bar chart for payroll employment with raw
+# change in jobs for last two years.
+
+# TODO: Make horizontal bar chart of YoY changes in average hourly earnings
+# and payroll employment by NAICS supersector
+
+# TODO: Make faceted line chart of YoY change in payroll employment and hourly earnings 
+# by NAICS supersector with dashed line of non-recession/recession average
+
+# TODO: Make faceted bar chart of MoM change in payroll employment by NAICS
+# supersector.
+
+# TODO: Make scatterplot of YoY change in payroll employment and average hourly
+# earnings for all detailed industry with dashed lines for national averages
+# and points colored by NAICS supersector.
+

@@ -51,10 +51,10 @@ get_avg_col_val <- function(df, dts, val_col, filter_type) {
 
 # Function that add a trailing three-month average column to a data frame
 # with a numeric column named `value`. It will also filter the data frame
-# to only rows that contain dates within the last 60 months
+# to only rows that contain dates within the last 48 months
 make_viz_df_trail_three <- function(df) {
   
-  ts_jolts_beginning_month <- max(df$date, na.rm = T) %m-% months(60)
+  ts_jolts_beginning_month <- max(df$date, na.rm = T) %m-% months(48)
   
   viz_df <- df %>% 
     mutate(value_trail_three = rollmean(value, 3, fill = NA, align = "right")) %>% 
@@ -85,7 +85,7 @@ get_x_annotation_val <- function(diff, dte) {
 
 # Function to add on 10% on each side of the range of a numerical vector
 get_data_range <- function(vec) {
-  simple_range <- range(vec)
+  simple_range <- range(vec, na.rm = T)
   highest_extra <- simple_range[2] + (abs(simple_range[2]) * .1)
   lowest_extra <- simple_range[1] - (abs(simple_range[1]) * .1)
   extra_range <- c(lowest_extra, highest_extra)
@@ -234,8 +234,8 @@ scatter_theme <- function() {
 # Function to make the dual current and trailing three-month average
 # line time-series plots.
 make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
-                                   y_col_two = NULL, rec_avg_line, 
-                                   non_rec_avg_line, y_data_type,
+                                   y_col_two = NULL, rec_avg_line = NULL, 
+                                   non_rec_avg_line = NULL, y_data_type,
                                    viz_title = NULL, viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
@@ -281,7 +281,8 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
     if (second_y_col) {
       y_col_two_quo <- enquo(y_col_two)
       # Replacing the data range with the more volatile mom annualized column
-      data_range <- range(pull(viz_df, !!y_col_two_quo))
+      second_line_data_range <- get_data_range(pull(viz_df, !!y_col_two_quo))
+      data_range <- range(data_range, second_line_data_range)
       plt <- plt + geom_line(mapping = aes(y = !!y_col_two_quo),
                              linewidth = 0.8,
                              color = "#a6cee3", 
@@ -290,7 +291,8 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
         
     }
 
-    if (between(non_rec_avg_line, data_range[1], data_range[2])) {
+    if (!is.null(non_rec_avg_line)) {
+      if (between(non_rec_avg_line, data_range[1], data_range[2])) {
       plt <- plt + geom_hline(yintercept = non_rec_avg_line,
                               color = "black",
                               linewidth = 0.75,
@@ -303,9 +305,11 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
                    color = "black",
                    size = 3.5,
                    fontface = "bold")
+      }
     }
     
-    if (between(rec_avg_line, data_range[1], data_range[2])) {
+    if (!is.null(rec_avg_line)) {
+      if (between(rec_avg_line, data_range[1], data_range[2])) {
       plt <- plt + geom_hline(yintercept = rec_avg_line,
                               color = "red",
                               linewidth = 0.75,
@@ -318,6 +322,7 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
                    color = "red",
                    size = 3.5,
                    fontface = "bold")
+      }
     }
     
     if (y_data_type == "percentage") {
