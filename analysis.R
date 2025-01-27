@@ -138,14 +138,14 @@ ces_emp_yoy_recession_avg <- get_avg_col_val(
   filter_type = "inclusive"
 )
 
-ces_emp_ttlnf_yoy_momann_last_yr_df <- ces_emp_ttlnf_yoy_momann_df %>% 
-  filter(date >= max(date) %m-% months(12))
+ces_emp_ttlnf_yoy_momann_last_2_yrs_df <- ces_emp_ttlnf_yoy_momann_df %>% 
+  filter(date >= max(date) %m-% months(24))
 
-econ_csv_write_out(ces_emp_ttlnf_yoy_momann_last_yr_df,
+econ_csv_write_out(ces_emp_ttlnf_yoy_momann_last_2_yrs_df,
                    "./data")
 
 ces_emp_ttlnf_yoy_momann_viz <- make_ts_line_chart(
-  viz_df = ces_emp_ttlnf_yoy_momann_last_yr_df,
+  viz_df = ces_emp_ttlnf_yoy_momann_last_2_yrs_df,
   x_col = date,
   y_col_one = yoy_chg,
   second_y_col = T,
@@ -159,6 +159,5 @@ ces_emp_ttlnf_yoy_momann_viz <- make_ts_line_chart(
 )
 
 save_chart(ces_emp_ttlnf_yoy_momann_viz)
-# TODO: Apply all of these tweaks to the bls_jolts_analysis `make_ts_two_line_chart()`
-# and see how the vizes look.
 
+# Average Hourly Earnings year-over-year and month-over-month annualized

@@ -83,6 +83,15 @@ get_x_annotation_val <- function(diff, dte) {
   return(x_ann)
 }
 
+# Function to add on 10% on each side of the range of a numerical vector
+get_data_range <- function(vec) {
+  simple_range <- range(vec)
+  highest_extra <- simple_range[2] + (abs(simple_range[2]) * .1)
+  lowest_extra <- simple_range[1] - (abs(simple_range[1]) * .1)
+  extra_range <- c(lowest_extra, highest_extra)
+  return(extra_range)
+}
+
 ## Data gathering functions ##
 # Function to retrieve data from FRED API
 get_fred_data <- function(series_id, api_key) {
@@ -236,7 +245,7 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
   viz_title <- make_chart_title(viz_df, viz_title)
   
   # Getting data range to use for annotation calculations
-  data_range <- range(pull(viz_df, !!y_col_one_quo))
+  data_range <- get_data_range(pull(viz_df, !!y_col_one_quo))
   
   latest_date_dte <- max(viz_df$date, na.rm = T)
   earliest_date_dte <- min(viz_df$date, na.rm = T)
@@ -281,7 +290,7 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
         
     }
 
-    if (between(non_rec_avg_line, data_range[1], (data_range[2] * 1.1))) {
+    if (between(non_rec_avg_line, data_range[1], data_range[2])) {
       plt <- plt + geom_hline(yintercept = non_rec_avg_line,
                               color = "black",
                               linewidth = 0.75,
