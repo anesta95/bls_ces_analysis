@@ -28,13 +28,21 @@ make_metadata_vec <- function(df) {
   return(metadata_vec)
 }
 
-# Function to get average value from a vector of numeric data types
-get_avg_col_val <- function(df, dts, val_col) {
+# Function to get average value from a vector of numeric data types after 
+# filtering out data values.
+get_avg_col_val <- function(df, dts, val_col, filter_type) {
   
   val_col_name <- enquo(val_col)
   
-  avg <- df %>% 
-    filter(date %nin% dts) %>% 
+  if (filter_type == "inclusive") {
+    df_filtered <- df %>% 
+      filter(date %in% dts)
+  } else {
+    df_filtered <- df %>% 
+      filter(date %nin% dts)
+  }
+  
+  avg <- df_filtered %>% 
     pull(!!val_col_name) %>% 
     mean(na.rm = T)
   
@@ -66,6 +74,13 @@ make_chart_title <- function(viz_df, viz_title) {
     )
   } 
   return(viz_title)
+}
+
+# Function to add 13% of numeric difference in vector of dates to latest date
+# in vector for annotation for dashed line recession & non-recession averages.
+get_x_annotation_val <- function(diff, dte) {
+  x_ann <- base::as.Date(as.numeric(dte) + (.13 * diff))
+  return(x_ann)
 }
 
 ## Data gathering functions ##
@@ -209,62 +224,105 @@ scatter_theme <- function() {
 
 # Function to make the dual current and trailing three-month average
 # line time-series plots.
-make_ts_two_line_chart <- function(viz_df, avg_line, x_col, 
-                                      y_col_one, y_col_two,
-                                      viz_title = NULL, viz_subtitle, viz_caption) {
+make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
+                                   y_col_two = NULL, rec_avg_line, 
+                                   non_rec_avg_line, y_data_type,
+                                   viz_title = NULL, viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
   x_col_quo <- enquo(x_col)
   y_col_one_quo <- enquo(y_col_one)
-  y_col_two_quo <- enquo(y_col_two)
   
   viz_title <- make_chart_title(viz_df, viz_title)
   
+  # Getting data range to use for annotation calculations
+  data_range <- range(pull(viz_df, !!y_col_one_quo))
+  
   latest_date_dte <- max(viz_df$date, na.rm = T)
   earliest_date_dte <- min(viz_df$date, na.rm = T)
-  date_dte_range <- diff(as.numeric(range(viz_df$date, na.rm = T)))
+  # Getting dashed recession/non-recession average line offset
+  num_data_dte_range_diff <- diff(as.numeric(range(viz_df$date, na.rm = T)))
+  x_ann <- get_x_annotation_val(num_data_dte_range_diff, latest_date_dte)
+  
   latest_date_str <- format(latest_date_dte, "%b. '%y")
   
   # Creating final viz caption
   viz_caption_full <- str_replace(viz_caption, "MMM. 'YY", latest_date_str)
   
+  
+  # Base plt
   plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo)) +
     coord_cartesian(
       xlim = c(earliest_date_dte, latest_date_dte),
       clip = "off") +
     geom_line(mapping = aes(y = !!y_col_one_quo),
-              linewidth = 0.8,
-              color = "#a6cee3", 
-              lineend = "round",
-              linejoin = "bevel") +
-    geom_line(mapping = aes(y = !!y_col_two_quo),
               linewidth = 2.75,
               color = "#1f78b4", 
               lineend = "round",
               linejoin = "bevel") +
-    geom_hline(yintercept = avg_line,
-               color = "black",
-               linewidth = 0.75,
-               linetype = "dashed"
-    ) +
-    annotate("text",
-             x = base::as.Date(as.numeric(latest_date_dte) + (.13 * date_dte_range)),
-             y = avg_line,
-             hjust = 0.5,
-             label = "Non-recession\navg.",
-             color = "black",
-             size = 3.5,
-             fontface = "bold") +
     scale_x_date(date_labels = "%b. '%y") +
-    scale_y_continuous(labels = label_percent(scale = 100, 
-                                     suffix = "%", 
-                                     accuracy = 0.1)) +
     labs(
       title = viz_title,
       subtitle = viz_subtitle,
       caption = viz_caption_full
     ) +
     ts_line_theme()
+  
+    # Adding in second smaller line if specified
+    if (second_y_col) {
+      y_col_two_quo <- enquo(y_col_two)
+      # Replacing the data range with the more volatile mom annualized column
+      data_range <- range(pull(viz_df, !!y_col_two_quo))
+      plt <- plt + geom_line(mapping = aes(y = !!y_col_two_quo),
+                             linewidth = 0.8,
+                             color = "#a6cee3", 
+                             lineend = "round",
+                             linejoin = "bevel")
+        
+    }
+
+    if (between(non_rec_avg_line, data_range[1], (data_range[2] * 1.1))) {
+      plt <- plt + geom_hline(yintercept = non_rec_avg_line,
+                              color = "black",
+                              linewidth = 0.75,
+                              linetype = "dashed"
+      ) + annotate("text",
+                   x = x_ann,
+                   y = non_rec_avg_line,
+                   hjust = 0.5,
+                   label = "Non-recession\navg.",
+                   color = "black",
+                   size = 3.5,
+                   fontface = "bold")
+    }
+    
+    if (between(rec_avg_line, data_range[1], data_range[2])) {
+      plt <- plt + geom_hline(yintercept = rec_avg_line,
+                              color = "red",
+                              linewidth = 0.75,
+                              linetype = "dashed"
+      ) + annotate("text",
+                   x = x_ann,
+                   y = rec_avg_line,
+                   hjust = 0.5,
+                   label = "Recession\navg.",
+                   color = "red",
+                   size = 3.5,
+                   fontface = "bold")
+    }
+    
+    if (y_data_type == "percentage") {
+      plt <- plt + scale_y_continuous(labels = label_percent(scale = 100, 
+                                                             suffix = "%", 
+                                                             accuracy = 0.1))
+    } else if (y_data_type == "dollar") {
+      plt <- plt + scale_y_continuous(labels = label_currency(scale = 1, 
+                                                             prefix = "$", 
+                                                             scale_cut = cut_short_scale()))
+    } else if (y_data_type == "number") {
+      plt <- plt + scale_y_continuous(labels = label_number(scale = 1, 
+                                                              scale_cut = cut_short_scale()))
+    }
   
   return(plt)
   

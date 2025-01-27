@@ -127,7 +127,15 @@ ces_emp_ttlnf_yoy_momann_df <- ces_full %>%
 ces_emp_yoy_non_recession_avg <- get_avg_col_val(
   df = ces_emp_ttlnf_yoy_momann_df,
   dts = recession_dates,
-  val_col = yoy_chg
+  val_col = yoy_chg,
+  filter_type = "exclusive"
+)
+
+ces_emp_yoy_recession_avg <- get_avg_col_val(
+  df = ces_emp_ttlnf_yoy_momann_df,
+  dts = recession_dates,
+  val_col = yoy_chg,
+  filter_type = "inclusive"
 )
 
 ces_emp_ttlnf_yoy_momann_last_yr_df <- ces_emp_ttlnf_yoy_momann_df %>% 
@@ -136,30 +144,21 @@ ces_emp_ttlnf_yoy_momann_last_yr_df <- ces_emp_ttlnf_yoy_momann_df %>%
 econ_csv_write_out(ces_emp_ttlnf_yoy_momann_last_yr_df,
                    "./data")
 
-ces_emp_ttlnf_yoy_momann_viz <- make_ts_two_line_chart(
+ces_emp_ttlnf_yoy_momann_viz <- make_ts_line_chart(
   viz_df = ces_emp_ttlnf_yoy_momann_last_yr_df,
-  avg_line = ces_emp_yoy_non_recession_avg,
   x_col = date,
-  y_col_one = mom_chg_ann,
-  y_col_two = yoy_chg,
+  y_col_one = yoy_chg,
+  second_y_col = T,
+  y_col_two = mom_chg_ann,
+  rec_avg_line = ces_emp_yoy_recession_avg,
+  non_rec_avg_line = ces_emp_yoy_non_recession_avg,
+  y_data_type = "percentage",
   viz_title = "Change in Payroll Nonfarm Employment",
   viz_subtitle = "<b style=\"color: #a6cee3\">Monthly annualized</b> and <b style = \"color: #1f78b4\">yearly</b>",
   viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
 )
 
 save_chart(ces_emp_ttlnf_yoy_momann_viz)
-# TODO: Update `make_ts_two_line_chart` to optionally apply the `coord_cartesian()`,
-# geom_hline(), and annotate() layers if the recession & non-recession averages
-# are in the data range. 
-# TODO: Make `y_col_two` argument (smaller light blue line) optional and only
-# add on the `geom_line()` layer for it if supplied.
-# TODO: Change `get_avg_col_val` function so that it can calculate average
-# for dates supplied _or_ *not* for dates supplied.
-# TODO: Change function so that it applies `scale_y_continuous()` based on function
-# argument specifying if it is dollar label, percentage label, or no label
-# TODO: Try out eliminating the `date_breaks` arguement in `scale_x_date()` to
-# see if automatic labels fit better. If not, build in some logic based on the
-# range of dates in the `date` column
 # TODO: Apply all of these tweaks to the bls_jolts_analysis `make_ts_two_line_chart()`
 # and see how the vizes look.
 
