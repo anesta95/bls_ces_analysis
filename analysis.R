@@ -110,7 +110,7 @@ ces_full <- reduce(full_ce_df_list, left_join) %>%
 ### Analysis & Visualizations ###
 ## Time Series Line Graphs ##
 # Payroll Employment year-over-year and month-over-month annualized
-ces_emp_ttlnf_yoy_momann_df <- ces_full %>% 
+ces_emp_ttlnf_yoy_mom_momann_df <- ces_full %>% 
   filter(!is.na(date),
          data_type_code == "01",
          seasonal_code == "S",
@@ -118,34 +118,37 @@ ces_emp_ttlnf_yoy_momann_df <- ces_full %>%
          ) %>% 
   arrange(desc(date)) %>% 
   mutate(
+    value = value * 1000,
     yoy_chg = (value / lead(value, n = 12)) - 1,
+    mom_chg_raw = (value - lead(value, n = 1)),
     mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1,
     val_type_text = "ts_line"
   ) %>% 
-  select(date, yoy_chg, mom_chg_ann, data_type_text, industry_text, val_type_text)
+  select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
+         data_type_text, industry_text, val_type_text)
 
 ces_emp_yoy_non_recession_avg <- get_avg_col_val(
-  df = ces_emp_ttlnf_yoy_momann_df,
+  df = ces_emp_ttlnf_yoy_mom_momann_df,
   dts = recession_dates,
   val_col = yoy_chg,
   filter_type = "exclusive"
 )
 
 ces_emp_yoy_recession_avg <- get_avg_col_val(
-  df = ces_emp_ttlnf_yoy_momann_df,
+  df = ces_emp_ttlnf_yoy_mom_momann_df,
   dts = recession_dates,
   val_col = yoy_chg,
   filter_type = "inclusive"
 )
 
-ces_emp_ttlnf_yoy_momann_last_2_yrs_df <- ces_emp_ttlnf_yoy_momann_df %>% 
+ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df <- ces_emp_ttlnf_yoy_mom_momann_df %>% 
   filter(date >= max(date) %m-% months(24))
 
-econ_csv_write_out(ces_emp_ttlnf_yoy_momann_last_2_yrs_df,
+econ_csv_write_out(ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df,
                    "./data")
 
-ces_emp_ttlnf_yoy_momann_viz <- make_ts_line_chart(
-  viz_df = ces_emp_ttlnf_yoy_momann_last_2_yrs_df,
+ces_emp_ttlnf_yoy_mom_momann_viz <- make_ts_line_chart(
+  viz_df = ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df,
   x_col = date,
   y_col_one = yoy_chg,
   second_y_col = T,
@@ -153,12 +156,12 @@ ces_emp_ttlnf_yoy_momann_viz <- make_ts_line_chart(
   rec_avg_line = ces_emp_yoy_recession_avg,
   non_rec_avg_line = ces_emp_yoy_non_recession_avg,
   y_data_type = "percentage",
-  viz_title = "Change in Payroll Nonfarm Employment",
+  viz_title = "Change in Total Nonfarm Payroll Employment",
   viz_subtitle = "<b style=\"color: #a6cee3\">Monthly annualized</b> and <b style = \"color: #1f78b4\">yearly</b>",
   viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
 )
 
-save_chart(ces_emp_ttlnf_yoy_momann_viz)
+save_chart(ces_emp_ttlnf_yoy_mom_momann_viz)
 
 # Average Hourly Earnings for total private year-over-year and month-over-month annualized
 ces_earn_ttlnf_yoy_momann_df <- ces_full %>% 
@@ -197,9 +200,69 @@ save_chart(ces_earn_ttlnf_yoy_momann_viz)
 
 # TODO: Make month-over-month bar chart for payroll employment with raw
 # change in jobs for last two years.
+ces_emp_mom_non_recession_avg <- get_avg_col_val(
+  df = ces_emp_ttlnf_yoy_mom_momann_df,
+  dts = recession_dates,
+  val_col = mom_chg_raw,
+  filter_type = "exclusive"
+)
 
-# TODO: Make horizontal bar chart of YoY changes in average hourly earnings
-# and payroll employment by NAICS supersector
+ces_emp_mom_recession_avg <- get_avg_col_val(
+  df = ces_emp_ttlnf_yoy_mom_momann_df,
+  dts = recession_dates,
+  val_col = mom_chg_raw,
+  filter_type = "inclusive"
+)
+
+ggplot(ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df, aes(x = date, 
+                                                       y = mom_chg_raw, 
+                                                       fill = mom_chg_raw)) + 
+  coord_cartesian(
+    xlim = c(min(ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df$date), max(ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df$date)),
+    clip = "off") +
+  geom_col() + 
+  scale_x_date(date_labels = "%b. '%y") +
+  geom_hline(yintercept = 0,
+             color = "black",
+             linewidth = 1.2,
+             linetype = "solid"
+  ) + 
+  geom_text(aes(label = label_number(scale = 1, scale_cut = cut_short_scale())(mom_chg_raw), 
+                vjust = if_else(mom_chg_raw > 0, -.15, 1.05)), 
+            color = "black", 
+            size = 5) + 
+  scale_fill_steps2(low = "#8c510a", 
+                    mid = "#f5f5f5", 
+                    high = "#01665e", midpoint = 0, guide = "none") +
+  scale_y_continuous(labels = label_number(scale = 1, big.mark = ",")) + 
+  labs(
+    title = "Change in Total Nonfarm Payroll Employment",
+    subtitle = "Raw month-over-month",
+    caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
+  ) +
+  theme_classic() +
+  theme(
+    plot.title = element_text(size = 36, face = "bold", color = "black"),
+    plot.margin = margin(20, 100, 20, 20, "pt"),
+    plot.subtitle = element_text(size = 24, color = "black"),
+    plot.caption = element_text(size = 10, color = "black"),
+    axis.text = element_text(size = 14, color = "black", face = "bold", 
+                               margin = margin(b = 15, t = 15, r = 5)),
+    axis.title = element_blank()
+  ) + geom_hline(yintercept = ces_emp_mom_non_recession_avg,
+                 color = "black",
+                 linewidth = 0.75,
+                 linetype = "dashed"
+  ) + annotate("text",
+               x = get_x_annotation_val(diff(as.numeric(range(ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df$date, na.rm = T))), max(ces_emp_ttlnf_yoy_mom_momann_last_2_yrs_df$date)),
+               y = ces_emp_mom_non_recession_avg,
+               hjust = 0.5,
+               label = "Non-recession\navg.",
+               color = "black",
+               size = 3.5,
+               fontface = "bold")
+
+# TODO: Functionalize monthly vertical nonfarm payroll employment bar chart.
 
 # TODO: Make faceted line chart of YoY change in payroll employment and hourly earnings 
 # by NAICS supersector with dashed line of non-recession/recession average
