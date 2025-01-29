@@ -175,6 +175,20 @@ ts_line_theme <- function() {
   
 }
 
+ts_bar_theme <- function() {
+  theme_classic() +
+    theme(
+      plot.title = element_text(size = 36, face = "bold", color = "black"),
+      plot.margin = margin(20, 100, 20, 20, "pt"),
+      plot.subtitle = element_text(size = 24, color = "black"),
+      plot.caption = element_text(size = 10, color = "black"),
+      axis.text = element_text(size = 14, color = "black", face = "bold", 
+                               margin = margin(b = 15, t = 15, r = 5)),
+      axis.line.x = element_blank(),
+      axis.title = element_blank()
+    )
+}
+
 bar_theme <- function() {
   theme_classic() +
     theme(
@@ -341,6 +355,112 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
   return(plt)
   
 }
+
+# Function to make time series bar graph
+make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL, 
+                              non_rec_avg_line = NULL, y_data_type,
+                              viz_title = NULL, viz_subtitle, viz_caption) {
+  # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
+  # Quoting X and Y variables:
+  x_col_quo <- enquo(x_col)
+  y_col_one_quo <- enquo(y_col_one)
+  
+  viz_title <- make_chart_title(viz_df, viz_title)
+  
+  # Getting data range to use for annotation calculations
+  data_range <- get_data_range(pull(viz_df, !!y_col_one_quo))
+  
+  latest_date_dte <- max(viz_df$date, na.rm = T)
+  earliest_date_dte <- min(viz_df$date, na.rm = T)
+  # Getting dashed recession/non-recession average line offset
+  num_data_dte_range_diff <- diff(as.numeric(range(viz_df$date, na.rm = T)))
+  x_ann <- get_x_annotation_val(num_data_dte_range_diff, latest_date_dte)
+  
+  latest_date_str <- format(latest_date_dte, "%b. '%y")
+  
+  # Creating final viz caption
+  viz_caption_full <- str_replace(viz_caption, "MMM. 'YY", latest_date_str)
+  
+  # Base plt
+  plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo, 
+                                      y = !!y_col_one_quo,
+                                      fill = !!y_col_one_quo)) +
+    coord_cartesian(
+      xlim = c(earliest_date_dte, latest_date_dte),
+      clip = "off") +
+    geom_col() +
+    geom_text(aes(label = label_number(scale = 1, scale_cut = cut_short_scale())(!!y_col_one_quo), 
+                  vjust = if_else(!!y_col_one_quo > 0, -.15, 1.05)), 
+              color = "black", 
+              size = 5) + 
+    scale_fill_steps2(low = "#8c510a", 
+                      mid = "#f5f5f5", 
+                      high = "#01665e", midpoint = 0, guide = "none") +
+    scale_x_date(date_labels = "%b. '%y") + # I think I can eventually make differing number of labels and ticks with this: https://teunbrand.github.io/ggh4x/ & https://stackoverflow.com/questions/14490071/adding-minor-tick-marks-to-the-x-axis-in-ggplot2-with-no-labels
+    labs(
+      title = viz_title,
+      subtitle = viz_subtitle,
+      caption = viz_caption_full
+    ) +
+    ts_bar_theme()
+  
+  if (!is.null(non_rec_avg_line)) {
+    if (between(non_rec_avg_line, data_range[1], data_range[2])) {
+      plt <- plt + geom_hline(yintercept = non_rec_avg_line,
+                              color = "black",
+                              linewidth = 0.75,
+                              linetype = "dashed",
+                              alpha = 0.4
+      ) + annotate("text",
+                   x = x_ann,
+                   y = non_rec_avg_line,
+                   hjust = 0.5,
+                   label = "Non-recession\navg.",
+                   color = "black",
+                   size = 3.5,
+                   fontface = "bold")
+    }
+  }
+  
+  if (!is.null(rec_avg_line)) {
+    if (between(rec_avg_line, data_range[1], data_range[2])) {
+      plt <- plt + geom_hline(yintercept = rec_avg_line,
+                              color = "red",
+                              linewidth = 0.75,
+                              linetype = "dashed",
+                              alpha = 0.4
+      ) + annotate("text",
+                   x = x_ann,
+                   y = rec_avg_line,
+                   hjust = 0.5,
+                   label = "Recession\navg.",
+                   color = "red",
+                   size = 3.5,
+                   fontface = "bold")
+    }
+  }
+  
+  if (y_data_type == "percentage") {
+    plt <- plt + scale_y_continuous(
+      expand = expansion(mult = c(.15, .15)),
+      labels = label_percent(scale = 100, suffix = "%", accuracy = 0.1)
+      )
+  } else if (y_data_type == "dollar") {
+    plt <- plt + scale_y_continuous(
+      expand = expansion(mult = c(.15, .15)),
+      labels = label_currency(scale = 1, prefix = "$", scale_cut = cut_short_scale())
+      )
+  } else if (y_data_type == "number") {
+    plt <- plt + scale_y_continuous(
+      expand = expansion(mult = c(.03, .03)),
+      labels = label_number(scale = 1, scale_cut = cut_short_scale())
+      )
+  }
+  
+  return(plt)
+  
+}
+
 
 make_bar <- function(viz_df, x_col, y_col, viz_title = NULL, 
                      viz_subtitle, viz_caption) {
