@@ -165,7 +165,7 @@ ces_emp_ttlnf_yoy_momann_ts_line_viz <- make_ts_line_chart(
 save_chart(ces_emp_ttlnf_yoy_momann_ts_line_viz)
 
 # Average Hourly Earnings for total private year-over-year and month-over-month annualized
-ces_earn_ttlnf_yoy_momann_df <- ces_full %>% 
+ces_earn_priv_yoy_momann_df <- ces_full %>% 
   filter(!is.na(date),
          data_type_code == "03",
          seasonal_code == "S",
@@ -179,14 +179,14 @@ ces_earn_ttlnf_yoy_momann_df <- ces_full %>%
   ) %>% 
   select(date, yoy_chg, mom_chg_ann, data_type_text, industry_text, val_type_text)
 
-ces_earn_ttlnf_yoy_momann_last_2_yrs_df <- ces_earn_ttlnf_yoy_momann_df %>% 
+ces_earn_priv_yoy_momann_last_2_yrs_df <- ces_earn_priv_yoy_momann_df %>% 
   filter(date >= max(date) %m-% months(24))
 
-econ_csv_write_out(ces_earn_ttlnf_yoy_momann_last_2_yrs_df,
+econ_csv_write_out(ces_earn_priv_yoy_momann_last_2_yrs_df,
                    "./data")
 
-ces_earn_ttlnf_yoy_momann_viz <- make_ts_line_chart(
-  viz_df = ces_earn_ttlnf_yoy_momann_last_2_yrs_df,
+ces_earn_priv_yoy_momann_viz <- make_ts_line_chart(
+  viz_df = ces_earn_priv_yoy_momann_last_2_yrs_df,
   x_col = date,
   y_col_one = yoy_chg,
   second_y_col = T,
@@ -197,7 +197,7 @@ ces_earn_ttlnf_yoy_momann_viz <- make_ts_line_chart(
   viz_caption = base_viz_caption
 )
 
-save_chart(ces_earn_ttlnf_yoy_momann_viz)
+save_chart(ces_earn_priv_yoy_momann_viz)
 
 ## Bar Graphs ##
 # Month-over-month raw change in nonfarm payroll employment
@@ -226,7 +226,7 @@ ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df <- ces_emp_ttlnf_yoy_mom_moman
 econ_csv_write_out(ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df,
                    "./data")
 
-ces_emp_ttlnf_yoy_momann_ts_bar_viz <- make_ts_bar_chart(
+ces_emp_ttlnf_mom_ts_bar_viz <- make_ts_bar_chart(
   viz_df = ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df,
   x_col = date,
   y_col_one = mom_chg_raw,
@@ -238,9 +238,39 @@ ces_emp_ttlnf_yoy_momann_ts_bar_viz <- make_ts_bar_chart(
   viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
 )
 
-ces_emp_ttlnf_yoy_momann_ts_bar_viz + geom_hline(yintercept = 0, linewidth = 2)
+save_chart(ces_emp_ttlnf_mom_ts_bar_viz)
 
-save_chart(ces_emp_ttlnf_yoy_momann_ts_bar_viz)
+# Year-over-year change in payroll employment by NAICS supersector
+ces_emp_naics_ss_yoy_df <- ces_full %>% 
+  filter(!is.na(date),
+         data_type_code == "01",
+         seasonal_code == "S",
+         industry_code %in% naics_supersectors
+  ) %>% 
+  arrange(industry_text, desc(date)) %>% 
+  filter(date %in% c(max(date, na.rm = T), max(date, na.rm = T) %m-% months(12))) %>%
+  group_by(data_type_text, industry_text) %>% 
+  summarize(
+    value = (value[date == max(date)] / value[date != max(date)]) - 1,
+    date = max(date),
+    .groups = "drop",
+  ) %>% 
+  relocate(c(date, value), .before = data_type_text) %>%
+  mutate(val_type_text = "yoy_bar") %>% 
+  arrange(desc(value))
+
+econ_csv_write_out(ces_emp_naics_ss_yoy_df, "./data")
+
+ces_emp_naics_ss_yoy_viz <- make_pct_chg_bar(
+  viz_df = ces_emp_naics_ss_yoy_df,
+  x_col = value,
+  y_col = industry_text,
+  viz_title = "Percent Change in Payroll Employment",
+  viz_subtitle = "Year-over-year by NAICS Supersector",
+  viz_caption = base_viz_caption
+)
+
+save_chart(ces_emp_naics_ss_yoy_viz)
 
 # TODO: Make faceted line chart of YoY change in payroll employment and hourly earnings 
 # by NAICS supersector with dashed line of non-recession/recession average

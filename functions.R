@@ -200,7 +200,7 @@ bar_theme <- function() {
       axis.line.x = element_blank(),
       axis.text.y = element_text(size = 14, color = "black", face = "bold", 
                                  margin = margin(b = 15, t = 15, r = 5)),
-      axis.ticks = element_blank(),
+      axis.ticks.x = element_blank(),
       axis.title = element_blank(),
       
     )
@@ -397,6 +397,7 @@ make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL,
                       mid = "#f5f5f5", 
                       high = "#01665e", midpoint = 0, guide = "none") +
     scale_x_date(date_labels = "%b. '%y") + # I think I can eventually make differing number of labels and ticks with this: https://teunbrand.github.io/ggh4x/ & https://stackoverflow.com/questions/14490071/adding-minor-tick-marks-to-the-x-axis-in-ggplot2-with-no-labels
+    geom_hline(yintercept = 0, linewidth = 2) + 
     labs(
       title = viz_title,
       subtitle = viz_subtitle,
