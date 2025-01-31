@@ -70,7 +70,7 @@ make_chart_title <- function(viz_df, viz_title) {
   if (is.null(viz_title)) {
     viz_title <- paste(
       unique(viz_df$dataelement_text),
-      unique(viz_df$ratelevel_text)
+      unique(viz_df$ratelevel_text) # Change the name of this column to `data_measurement_text`
     )
   } 
   return(viz_title)

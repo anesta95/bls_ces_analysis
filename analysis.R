@@ -105,28 +105,34 @@ ces_full <- reduce(full_ce_df_list, left_join) %>%
       )
     )
   ) %>% 
-  rename(industry_text = industry_name)
+  rename(industry_text = industry_name,
+         data_element_text = data_type_text)
 
 ### Analysis & Visualizations ###
 ## Time Series Line Graphs ##
 # Payroll Employment year-over-year and month-over-month annualized
-ces_emp_ttlnf_yoy_mom_momann_df <- ces_full %>% 
+ces_emp_all_naics_yoy_mom_momann_df <- ces_full %>% 
   filter(!is.na(date),
          data_type_code == "01",
          seasonal_code == "S",
-         industry_code == "00000000"
+         industry_code %in% naics_supersectors
          ) %>% 
-  arrange(desc(date)) %>% 
+  arrange(industry_text, desc(date)) %>% 
+  group_by(industry_code, industry_text) %>% 
   mutate(
     value = value * 1000,
     yoy_chg = (value / lead(value, n = 12)) - 1,
     mom_chg_raw = (value - lead(value, n = 1)),
-    mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1)
+    mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1) %>% 
+  ungroup()
+
+ces_emp_ttlnf_yoy_mom_momann_df <- ces_emp_all_naics_yoy_mom_momann_df %>% 
+  filter(industry_code == "00000000")
 
 ces_emp_ttlnf_yoy_mom_momann_ts_line_df <- ces_emp_ttlnf_yoy_mom_momann_df %>% 
   mutate(val_type_text = "ts_line") %>% 
   select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
-         data_type_text, industry_text, val_type_text)
+         data_element_text, industry_text, val_type_text)
 
 ces_emp_yoy_non_recession_avg <- get_avg_col_val(
   df = ces_emp_ttlnf_yoy_mom_momann_df,
@@ -177,7 +183,7 @@ ces_earn_priv_yoy_momann_df <- ces_full %>%
     mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1,
     val_type_text = "ts_line"
   ) %>% 
-  select(date, yoy_chg, mom_chg_ann, data_type_text, industry_text, val_type_text)
+  select(date, yoy_chg, mom_chg_ann, data_element_text, industry_text, val_type_text)
 
 ces_earn_priv_yoy_momann_last_2_yrs_df <- ces_earn_priv_yoy_momann_df %>% 
   filter(date >= max(date) %m-% months(24))
@@ -204,7 +210,7 @@ save_chart(ces_earn_priv_yoy_momann_viz)
 ces_emp_ttlnf_yoy_mom_momann_ts_bar_df <- ces_emp_ttlnf_yoy_mom_momann_df %>% 
   mutate(val_type_text = "ts_bar") %>% 
   select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
-         data_type_text, industry_text, val_type_text)
+         data_element_text, industry_text, val_type_text)
 
 ces_emp_mom_non_recession_avg <- get_avg_col_val(
   df = ces_emp_ttlnf_yoy_mom_momann_df,
@@ -249,13 +255,13 @@ ces_emp_naics_ss_yoy_df <- ces_full %>%
   ) %>% 
   arrange(industry_text, desc(date)) %>% 
   filter(date %in% c(max(date, na.rm = T), max(date, na.rm = T) %m-% months(12))) %>%
-  group_by(data_type_text, industry_text) %>% 
+  group_by(data_element_text, industry_text) %>% 
   summarize(
     value = (value[date == max(date)] / value[date != max(date)]) - 1,
     date = max(date),
     .groups = "drop",
   ) %>% 
-  relocate(c(date, value), .before = data_type_text) %>%
+  relocate(c(date, value), .before = data_element_text) %>%
   mutate(val_type_text = "yoy_bar") %>% 
   arrange(desc(value))
 
@@ -271,6 +277,38 @@ ces_emp_naics_ss_yoy_viz <- make_pct_chg_bar(
 )
 
 save_chart(ces_emp_naics_ss_yoy_viz)
+
+# Faceted line graph by NAICS industry
+ces_emp_naics_ss_yoy_mom_momann_df <- ces_emp_all_naics_yoy_mom_momann_df # Include total nonfarm now for even 4 x 3
+
+ces_emp_naics_ss_yoy_mom_momann_ts_line_df <- ces_emp_naics_ss_yoy_mom_momann_df %>% 
+  mutate(val_type_text = "ts_line") %>% 
+  select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
+         data_element_text, industry_text, val_type_text)
+
+ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df <- ces_emp_naics_ss_yoy_mom_momann_ts_line_df %>% 
+  filter(date >= max(date) %m-% months(24))
+
+econ_csv_write_out(ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df,
+                   "./data")
+
+ggplot(ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df) +
+  geom_line(aes(x = date, y = yoy_chg)) +
+  facet_wrap(vars(industry_text))
+
+# Functionalize this chart and add the following features:
+# 1. Stable Y-axis for all lines
+# 2. Ordered by largest gain/lowest loss in top left to smallest gain/biggest loss
+# in bottom right for YoY in most recent month
+# 3. Color bars with gradient scale_color_steps2() with 0 midpoint and
+# low = "#8c510a", mid = "#f5f5f5", high = "#01665e" and increase line size
+# 4. Apply same ts_line theme for aesthenics. Find way to bold/enlarge sector title
+# 5. Maybe: How to have non-recession and recession average dashed lines for each facet?
+# https://stackoverflow.com/questions/72563684/varying-geom-hline-for-each-facet-wrap-plot
+# https://forum.posit.co/t/create-geom-hline-with-different-values-on-each-facet-grid/156627/16
+# https://stackoverflow.com/questions/54244009/different-geom-hline-for-each-facet-of-ggplot
+# https://stackoverflow.com/questions/50980134/display-a-summary-line-per-facet-rather-than-overall
+# https://stackoverflow.com/questions/46327431/facet-wrap-add-geom-hline
 
 # TODO: Make faceted line chart of YoY change in payroll employment and hourly earnings 
 # by NAICS supersector with dashed line of non-recession/recession average
