@@ -1,4 +1,4 @@
-date,yoy_chg,mom_chg_ann,data_type_text,industry_text,val_type_text
+date,yoy_chg,mom_chg_ann,data_element_text,industry_text,val_type_text
 2024-12-01,0.03931275480489216,0.03424330780383422,Average Hourly Earnings Of All Employees,Total private,ts_line
 2024-11-01,0.03973122991527922,0.044891222306923106,Average Hourly Earnings Of All Employees,Total private,ts_line
 2024-10-01,0.039882697947213996,0.0450597609567982,Average Hourly Earnings Of All Employees,Total private,ts_line

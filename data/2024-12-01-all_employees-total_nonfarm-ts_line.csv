@@ -1,4 +1,4 @@
-date,value,yoy_chg,mom_chg_raw,mom_chg_ann,data_type_text,industry_text,val_type_text
+date,value,yoy_chg,mom_chg_raw,mom_chg_ann,data_element_text,industry_text,val_type_text
 2024-12-01,159536000,0.014189086100798498,256000,0.019458198230793977,All Employees,Total nonfarm,ts_line
 2024-11-01,159280000,0.014431834103965313,212000,0.01611091557310007,All Employees,Total nonfarm,ts_line
 2024-10-01,159068000,0.014257294429708134,43000,0.0032496027722923593,All Employees,Total nonfarm,ts_line

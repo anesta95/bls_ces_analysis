@@ -392,7 +392,7 @@ make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL,
     geom_text(aes(label = label_number(scale = 1, scale_cut = cut_short_scale())(!!y_col_one_quo), 
                   vjust = if_else(!!y_col_one_quo > 0, -.15, 1.05)), 
               color = "black", 
-              size = 5) + 
+              size = 4) + 
     scale_fill_steps2(low = "#8c510a", 
                       mid = "#f5f5f5", 
                       high = "#01665e", midpoint = 0, guide = "none") +
@@ -462,8 +462,76 @@ make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL,
   
 }
 
+make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_data_type,
+                                       viz_title = NULL, viz_subtitle, viz_caption) {
+  
+  # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
+  # Quoting X and Y variables:
+  x_col_quo <- enquo(x_col)
+  y_col_one_quo <- enquo(y_col_one)
+  facet_col_quo <- enquo(facet_col)
+  
+  viz_title <- make_chart_title(viz_df, viz_title)
+  
+  latest_date_dte <- max(viz_df$date, na.rm = T)
+  
+  unique_date_vec <- unique(viz_df$date) |> sort()
+  
+  date_axis_breaks <- c(
+    nth(unique_date_vec, n = (round(length(unique_date_vec) * .2))),
+    nth(unique_date_vec, n = (round(length(unique_date_vec) * .8)))
+  )
+  
+  latest_date_str <- format(latest_date_dte, "%b. '%y")
+  
+  # Creating final viz caption
+  viz_caption_full <- str_replace(viz_caption, "MMM. 'YY", latest_date_str)
+  
+  # Base plt
+  plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo, 
+                                      y = !!y_col_one_quo,
+                                      color = !!y_col_one_quo)) +
+    geom_line(mapping = aes(y = !!y_col_one_quo),
+              linewidth = 1.5, 
+              lineend = "round",
+              linejoin = "bevel") +
+    facet_wrap(vars(!!facet_col_quo), labeller = labeller(!!facet_col_quo := label_wrap_gen(23))) +
+    scale_color_steps2(low = "#8c510a", 
+                      mid = "#f5f5f5", 
+                      high = "#01665e", midpoint = 0, guide = "none") +
+    scale_x_date(date_labels = "%b. '%y", breaks = date_axis_breaks) + 
+    labs(
+      title = viz_title,
+      subtitle = viz_subtitle,
+      caption = viz_caption_full
+    ) +
+    ts_line_theme() + 
+    theme(strip.text = element_text(size = 14, face = "bold"))
+  
+  if (y_data_type == "percentage") {
+    plt <- plt + scale_y_continuous(
+      expand = expansion(mult = c(.15, .15)),
+      labels = label_percent(scale = 100, suffix = "%", accuracy = 1)
+    )
+  } else if (y_data_type == "dollar") {
+    plt <- plt + scale_y_continuous(
+      expand = expansion(mult = c(.15, .15)),
+      labels = label_currency(scale = 1, prefix = "$", scale_cut = cut_short_scale())
+    )
+  } else if (y_data_type == "number") {
+    plt <- plt + scale_y_continuous(
+      expand = expansion(mult = c(.03, .03)),
+      labels = label_number(scale = 1, scale_cut = cut_short_scale())
+    )
+  }
+  
+  return(plt)
+  
+  
+  
+}
 
-make_bar <- function(viz_df, x_col, y_col, viz_title = NULL, 
+make_bar_chart <- function(viz_df, x_col, y_col, viz_title = NULL, 
                      viz_subtitle, viz_caption) {
   
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
@@ -497,7 +565,7 @@ make_bar <- function(viz_df, x_col, y_col, viz_title = NULL,
   return(plt)
 }
 
-make_pct_chg_bar <- function(viz_df, x_col, y_col, viz_title = NULL, 
+make_pct_chg_bar_chart <- function(viz_df, x_col, y_col, viz_title = NULL, 
                          viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:

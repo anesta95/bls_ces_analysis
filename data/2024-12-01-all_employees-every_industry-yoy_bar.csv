@@ -1,4 +1,4 @@
-date,value,data_type_text,industry_text,val_type_text
+date,value,data_element_text,industry_text,val_type_text
 2024-12-01,0.03759049204444276,All Employees,Private education and health services,yoy_bar
 2024-12-01,0.024137931034482696,All Employees,Construction,yoy_bar
 2024-12-01,0.019067429363841315,All Employees,Government,yoy_bar

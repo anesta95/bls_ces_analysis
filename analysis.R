@@ -267,7 +267,7 @@ ces_emp_naics_ss_yoy_df <- ces_full %>%
 
 econ_csv_write_out(ces_emp_naics_ss_yoy_df, "./data")
 
-ces_emp_naics_ss_yoy_viz <- make_pct_chg_bar(
+ces_emp_naics_ss_yoy_viz <- make_pct_chg_bar_chart(
   viz_df = ces_emp_naics_ss_yoy_df,
   x_col = value,
   y_col = industry_text,
@@ -279,44 +279,46 @@ ces_emp_naics_ss_yoy_viz <- make_pct_chg_bar(
 save_chart(ces_emp_naics_ss_yoy_viz)
 
 # Faceted line graph by NAICS industry
-ces_emp_naics_ss_yoy_mom_momann_df <- ces_emp_all_naics_yoy_mom_momann_df # Include total nonfarm now for even 4 x 3
-
-ces_emp_naics_ss_yoy_mom_momann_ts_line_df <- ces_emp_naics_ss_yoy_mom_momann_df %>% 
+ces_emp_naics_ss_yoy_mom_momann_ts_line_df <- ces_emp_all_naics_yoy_mom_momann_df %>% 
   mutate(val_type_text = "ts_line") %>% 
   select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
          data_element_text, industry_text, val_type_text)
 
 ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df <- ces_emp_naics_ss_yoy_mom_momann_ts_line_df %>% 
+  arrange(desc(date), desc(yoy_chg)) %>% 
   filter(date >= max(date) %m-% months(24))
 
 econ_csv_write_out(ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df,
                    "./data")
 
-ggplot(ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df) +
-  geom_line(aes(x = date, y = yoy_chg)) +
-  facet_wrap(vars(industry_text))
+most_recent_levels <- filter(
+  ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df,
+  date == max(date)
+) %>% 
+  pull(industry_text)
+
+ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df <- ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df %>% 
+  mutate(industry_text = factor(industry_text, levels = most_recent_levels))
+
+ces_emp_naics_ss_yoy_ts_line_faceted_viz <- make_ts_faceted_line_chart(
+  viz_df = ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df,
+  x_col = date,
+  y_col_one = yoy_chg,
+  facet_col = industry_text,
+  y_data_type = "percentage",
+  viz_title = "Change in Total Nonfarm Payroll Employment",
+  viz_subtitle = "Year-over-year by NAICS Industry Supersector",
+  viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
+)
+
+save_chart(ces_emp_naics_ss_yoy_ts_line_faceted_viz)
 
 # Functionalize this chart and add the following features:
-# 1. Stable Y-axis for all lines
-# 2. Ordered by largest gain/lowest loss in top left to smallest gain/biggest loss
-# in bottom right for YoY in most recent month
-# 3. Color bars with gradient scale_color_steps2() with 0 midpoint and
-# low = "#8c510a", mid = "#f5f5f5", high = "#01665e" and increase line size
-# 4. Apply same ts_line theme for aesthenics. Find way to bold/enlarge sector title
+# 4. How to have lines be one color descending from largest gain/lowest loss to lowest gain/highest
+# loss for most recent months of data
 # 5. Maybe: How to have non-recession and recession average dashed lines for each facet?
 # https://stackoverflow.com/questions/72563684/varying-geom-hline-for-each-facet-wrap-plot
 # https://forum.posit.co/t/create-geom-hline-with-different-values-on-each-facet-grid/156627/16
 # https://stackoverflow.com/questions/54244009/different-geom-hline-for-each-facet-of-ggplot
 # https://stackoverflow.com/questions/50980134/display-a-summary-line-per-facet-rather-than-overall
 # https://stackoverflow.com/questions/46327431/facet-wrap-add-geom-hline
-
-# TODO: Make faceted line chart of YoY change in payroll employment and hourly earnings 
-# by NAICS supersector with dashed line of non-recession/recession average
-
-# TODO: Make faceted bar chart of MoM change in payroll employment by NAICS
-# supersector.
-
-# TODO: Make scatterplot of YoY change in payroll employment and average hourly
-# earnings for all detailed industry with dashed lines for national averages
-# and points colored by NAICS supersector.
-
