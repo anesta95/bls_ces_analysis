@@ -474,12 +474,19 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
   viz_title <- make_chart_title(viz_df, viz_title)
   
   latest_date_dte <- max(viz_df$date, na.rm = T)
+  earliest_date_dte <- min(viz_df$date, na.rm = T)
   
   unique_date_vec <- unique(viz_df$date) |> sort()
   
+  latest_date_values <- viz_df %>% 
+    arrange(desc(date), desc(!!y_col_one_quo)) %>% 
+    filter(date == latest_date_dte) %>% 
+    pull(!!y_col_one_quo)
+  
   date_axis_breaks <- c(
-    nth(unique_date_vec, n = (round(length(unique_date_vec) * .2))),
-    nth(unique_date_vec, n = (round(length(unique_date_vec) * .8)))
+    first(unique_date_vec),
+    nth(unique_date_vec, n = (round(length(unique_date_vec) * .5))),
+    last(unique_date_vec)
   )
   
   latest_date_str <- format(latest_date_dte, "%b. '%y")
@@ -496,17 +503,24 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
               lineend = "round",
               linejoin = "bevel") +
     facet_wrap(vars(!!facet_col_quo), labeller = labeller(!!facet_col_quo := label_wrap_gen(23))) +
-    scale_color_steps2(low = "#8c510a", 
-                      mid = "#f5f5f5", 
-                      high = "#01665e", midpoint = 0, guide = "none") +
-    scale_x_date(date_labels = "%b. '%y", breaks = date_axis_breaks) + 
+    scale_color_steps2(low = "#8c510a",
+                      mid = "#f5f5f5",
+                      high = "#01665e", 
+                      midpoint = 0, 
+                      guide = "none") +
+    scale_x_date(date_labels = "%m/'%y", breaks = date_axis_breaks) + 
     labs(
       title = viz_title,
       subtitle = viz_subtitle,
       caption = viz_caption_full
     ) +
     ts_line_theme() + 
-    theme(strip.text = element_text(size = 14, face = "bold"))
+    theme(strip.text = element_text(size = 14, face = "bold"),
+          panel.spacing.x = unit(38, "pt"),
+          axis.text.x = element_text(
+            size = 12, face = "bold", color = "black",
+            margin = margin(4, 0, 15, 0, "pt")
+            ))
   
   if (y_data_type == "percentage") {
     plt <- plt + scale_y_continuous(
