@@ -1,0 +1,13 @@
+date,value,data_element_text,industry_text,val_type_text
+2025-03-01,0.034943160143434904,All Employees,Private education and health services,yoy_bar
+2025-03-01,0.017503059975520152,All Employees,Construction,yoy_bar
+2025-03-01,0.015136226034308864,All Employees,Other services,yoy_bar
+2025-03-01,0.013347066649499917,All Employees,Government,yoy_bar
+2025-03-01,0.013057476746959118,All Employees,Leisure and hospitality,yoy_bar
+2025-03-01,0.011941568211685016,All Employees,Total nonfarm,yoy_bar
+2025-03-01,0.010161713286713336,All Employees,Financial activities,yoy_bar
+2025-03-01,0.00917240663182306,All Employees,"Trade, transportation, and utilities",yoy_bar
+2025-03-01,-0.0021204223174449144,All Employees,Professional and business services,yoy_bar
+2025-03-01,-0.005764137716155138,All Employees,Manufacturing,yoy_bar
+2025-03-01,-0.006759040216289258,All Employees,Information,yoy_bar
+2025-03-01,-0.02197802197802201,All Employees,Mining and logging,yoy_bar
