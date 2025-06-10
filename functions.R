@@ -8,13 +8,16 @@
 
 # Function that takes in data frame of columns with metadata on specific
 # details of data or chart and returns a vector of lower-case values for each
+#### TODO: Change this function to make sure it works with chart and CSV
+#### write-out functions `econ_csv_write_out()` and `save_chart()`
 make_metadata_vec <- function(df) {
   metadata_vec <- imap_chr(df, function(x, col_name){
     uniq_col_val <- unique(x)
     
     if (length(uniq_col_val) > 1) {
+      num_instances <- length(uniq_col_val)
       aspect_name <- str_remove(col_name, "_text")
-      detail_val <- paste0("every_", aspect_name)
+      detail_val <- paste0(num_instances, "_", aspect_name)
     } else {
       detail_val <- uniq_col_val
     }
@@ -28,8 +31,12 @@ make_metadata_vec <- function(df) {
   return(metadata_vec)
 }
 
+#### TODO: Write a function that checks if data frame has at least the minimum
+#### econanalyzr column names and are in the correct order. 
+
 # Function to get average value from a vector of numeric data types after 
 # filtering out data values.
+#### TODO: Make sure this function uses proper dplyr programming for package environment
 get_avg_col_val <- function(df, dts, val_col, filter_type) {
   
   val_col_name <- enquo(val_col)
@@ -49,28 +56,53 @@ get_avg_col_val <- function(df, dts, val_col, filter_type) {
   return(avg)
 }
 
-# Function that add a trailing three-month average column to a data frame
-# with a numeric column named `value`. It will also filter the data frame
-# to only rows that contain dates within the last 48 months
-make_viz_df_trail_three <- function(df) {
+# Function that add a moving (trailing) three-month average column to a data frame
+# with a numeric column named `value`. 
+#### TODO: Make this function more modular to take a variable time period and
+#### uses dplyr functional programming to work inside of packages.
+make_trail_avg_col <- function(df, trail_amount) {
   
-  ts_jolts_beginning_month <- max(df$date, na.rm = T) %m-% months(48)
+  trail_df <- df %>% 
+    arrange(desc(date)) %>% 
+    mutate(
+      value = rollmean(value, {{ trail_amount }}, fill = NA, align = "left"),
+      date_measure_text = paste(date_measure_text, "trail", {{ trail_amount }})
+    )
   
-  viz_df <- df %>% 
-    mutate(value_trail_three = rollmean(value, 3, fill = NA, align = "right")) %>% 
-    relocate(value_trail_three, .after = value) %>% 
-    filter(date >= ts_jolts_beginning_month)
+  combo_df <- bind_rows(df, trail_df)
   
-  return(viz_df)
+  return(combo_df)
+}
+
+# Function that will return all rows from the most recent date in the data frame
+# until a specified time previous to the most recent date.
+filter_recent_dates <- function(df, time_amount, time_measure) {
+  latest_date <- max(df$date, na.rm = T)
+  
+  if (time_measure == "month") {
+    start_date <- latest_date %m-% months(time_amount)
+  } else if (time_measure == "year") {
+    start_date <- latest_date - years(time_amount)
+  } else if (time_measure == "day") {
+    start_date <- latest_date - days(time_amount)
+  }
+  
+  filtered_df <- df %>% 
+    arrange(desc(date)) %>% 
+    filter(date >= start_date)
+  
+  return(filtered_df)
 }
 
 # Function to make visualization title from either unique combination of 
 # `dataelement_text` and `ratelevel_text` columns or use supplied title.
+#### TODO: Make this function  conform to new econanalyzr
+#### data syntax. Use dplyr functional programming to work inside of packages.
 make_chart_title <- function(viz_df, viz_title) {
   if (is.null(viz_title)) {
     viz_title <- paste(
-      unique(viz_df$dataelement_text),
-      unique(viz_df$ratelevel_text) # Change the name of this column to `data_measurement_text`
+      unique(viz_df$data_element_text),
+      unique(viz_df$metric_text) # Change the name of this column to `data_measurement_text`
     )
   } 
   return(viz_title)
@@ -92,8 +124,17 @@ get_data_range <- function(vec) {
   return(extra_range)
 }
 
+#### TODO: Write dynamic function that will annualize a numeric vector of 
+#### changes depending on time periods. Use the econanalyzr data syntax and
+#### dplyr functional programming to work inside of packages.
+
+#### TODO: Write dynamic function that will create an index of a numeric vector of 
+#### data depending on time periods. Use the econanalyzr data syntax and
+#### dplyr functional programming to work inside of packages.
+
 ## Data gathering functions ##
 # Function to retrieve data from FRED API
+#### TODO: Make sure this function will be able to work inside packages 
 get_fred_data <- function(series_id, api_key) {
   # API doc reference: https://fred.stlouisfed.org/docs/api/fred/series_observations.html
   fred_res <- GET(
@@ -122,6 +163,7 @@ get_fred_data <- function(series_id, api_key) {
 
 # Function to make HTTP GET requests with a provided email in the `user-agent`
 # request header to the BLS database and parses returned data as TSVs.
+#### TODO: Make sure this function will be able to work inside packages 
 get_bls_data <- function(url, email) {
   bls_res <- GET(url = url, user_agent(email))
   stop_for_status(bls_res)
@@ -140,6 +182,7 @@ get_bls_data <- function(url, email) {
 
 # Function to get additional codes CSVs and return data frames without the 
 # `display_level`, `selectable`, and `sort_sequence` columns
+#### TODO: Make sure this function will be able to work inside packages 
 get_bls_ref_code_table <- function(survey_abb, table_type, email) {
   ref_code_url <- paste0("https://download.bls.gov/pub/time.series/",
                          survey_abb,
@@ -247,19 +290,23 @@ scatter_theme <- function() {
 
 # Function to make the dual current and trailing three-month average
 # line time-series plots.
-make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
-                                   y_col_two = NULL, rec_avg_line = NULL, 
-                                   non_rec_avg_line = NULL, y_data_type,
-                                   viz_title = NULL, viz_subtitle, viz_caption) {
+make_ts_line_chart <- function(viz_df, x_col, y_col, rec_avg_line = NULL, 
+                               non_rec_avg_line = NULL, y_data_type,
+                               viz_title = NULL, viz_subtitle, viz_caption) {
+  # TEMPORARY: Creating ad-hoc columns for line size and color
+  viz_df <- viz_df %>% 
+    mutate(linewidth = if_else(date_measure_text == "Current", 0.8, 2.75),
+           color = if_else(date_measure_text == "Current", "#a6cee3", "#1f78b4"))
+  
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
   x_col_quo <- enquo(x_col)
-  y_col_one_quo <- enquo(y_col_one)
+  y_col_quo <- enquo(y_col)
   
   viz_title <- make_chart_title(viz_df, viz_title)
   
   # Getting data range to use for annotation calculations
-  data_range <- get_data_range(pull(viz_df, !!y_col_one_quo))
+  data_range <- get_data_range(pull(viz_df, !!y_col_quo))
   
   latest_date_dte <- max(viz_df$date, na.rm = T)
   earliest_date_dte <- min(viz_df$date, na.rm = T)
@@ -274,16 +321,20 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
   
   
   # Base plt
-  plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo)) +
+  plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo, y = !!y_col_quo)) +
     coord_cartesian(
       xlim = c(earliest_date_dte, latest_date_dte),
       clip = "off") +
-    geom_line(mapping = aes(y = !!y_col_one_quo),
-              linewidth = 2.75,
-              color = "#1f78b4", 
+    geom_line(mapping = aes(linewidth = linewidth, color = color),
               lineend = "round",
               linejoin = "bevel") +
     scale_x_date(date_labels = "%b. '%y") +
+    scale_linewidth_identity() +
+    scale_color_identity() +
+    guides(
+      color = "none",
+      linewidth = "none"
+    ) +
     labs(
       title = viz_title,
       subtitle = viz_subtitle,
@@ -291,22 +342,8 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
     ) +
     ts_line_theme()
   
-    # Adding in second smaller line if specified
-    if (second_y_col) {
-      y_col_two_quo <- enquo(y_col_two)
-      # Replacing the data range with the more volatile mom annualized column
-      second_line_data_range <- get_data_range(pull(viz_df, !!y_col_two_quo))
-      data_range <- range(data_range, second_line_data_range)
-      plt <- plt + geom_line(mapping = aes(y = !!y_col_two_quo),
-                             linewidth = 0.8,
-                             color = "#a6cee3", 
-                             lineend = "round",
-                             linejoin = "bevel")
-        
-    }
-
-    if (!is.null(non_rec_avg_line)) {
-      if (between(non_rec_avg_line, data_range[1], data_range[2])) {
+  if (!is.null(non_rec_avg_line)) {
+    if (between(non_rec_avg_line, data_range[1], data_range[2])) {
       plt <- plt + geom_hline(yintercept = non_rec_avg_line,
                               color = "black",
                               linewidth = 0.75,
@@ -319,11 +356,11 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
                    color = "black",
                    size = 3.5,
                    fontface = "bold")
-      }
     }
-    
-    if (!is.null(rec_avg_line)) {
-      if (between(rec_avg_line, data_range[1], data_range[2])) {
+  }
+  
+  if (!is.null(rec_avg_line)) {
+    if (between(rec_avg_line, data_range[1], data_range[2])) {
       plt <- plt + geom_hline(yintercept = rec_avg_line,
                               color = "red",
                               linewidth = 0.75,
@@ -336,21 +373,21 @@ make_ts_line_chart <- function(viz_df, x_col, y_col_one, second_y_col = F,
                    color = "red",
                    size = 3.5,
                    fontface = "bold")
-      }
     }
-    
-    if (y_data_type == "percentage") {
-      plt <- plt + scale_y_continuous(labels = label_percent(scale = 100, 
-                                                             suffix = "%", 
-                                                             accuracy = 0.1))
-    } else if (y_data_type == "dollar") {
-      plt <- plt + scale_y_continuous(labels = label_currency(scale = 1, 
-                                                             prefix = "$", 
-                                                             scale_cut = cut_short_scale()))
-    } else if (y_data_type == "number") {
-      plt <- plt + scale_y_continuous(labels = label_number(scale = 1, 
-                                                              scale_cut = cut_short_scale()))
-    }
+  }
+  
+  if (y_data_type == "percentage") {
+    plt <- plt + scale_y_continuous(labels = label_percent(scale = 100, 
+                                                           suffix = "%", 
+                                                           accuracy = 0.1))
+  } else if (y_data_type == "dollar") {
+    plt <- plt + scale_y_continuous(labels = label_currency(scale = 1, 
+                                                            prefix = "$", 
+                                                            scale_cut = cut_short_scale()))
+  } else if (y_data_type == "number") {
+    plt <- plt + scale_y_continuous(labels = label_number(scale = 1, 
+                                                          scale_cut = cut_short_scale()))
+  }
   
   return(plt)
   
@@ -445,17 +482,17 @@ make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL,
     plt <- plt + scale_y_continuous(
       expand = expansion(mult = c(.15, .15)),
       labels = label_percent(scale = 100, suffix = "%", accuracy = 0.1)
-      )
+    )
   } else if (y_data_type == "dollar") {
     plt <- plt + scale_y_continuous(
       expand = expansion(mult = c(.15, .15)),
       labels = label_currency(scale = 1, prefix = "$", scale_cut = cut_short_scale())
-      )
+    )
   } else if (y_data_type == "number") {
     plt <- plt + scale_y_continuous(
       expand = expansion(mult = c(.03, .03)),
       labels = label_number(scale = 1, scale_cut = cut_short_scale())
-      )
+    )
   }
   
   return(plt)
@@ -504,10 +541,10 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
               linejoin = "bevel") +
     facet_wrap(vars(!!facet_col_quo), labeller = labeller(!!facet_col_quo := label_wrap_gen(23))) +
     scale_color_steps2(low = "#8c510a",
-                      mid = "#f5f5f5",
-                      high = "#01665e", 
-                      midpoint = 0, 
-                      guide = "none") +
+                       mid = "#f5f5f5",
+                       high = "#01665e", 
+                       midpoint = 0, 
+                       guide = "none") +
     scale_x_date(date_labels = "%m/'%y", breaks = date_axis_breaks) + 
     labs(
       title = viz_title,
@@ -520,7 +557,7 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
           axis.text.x = element_text(
             size = 12, face = "bold", color = "black",
             margin = margin(4, 0, 15, 0, "pt")
-            ))
+          ))
   
   if (y_data_type == "percentage") {
     plt <- plt + scale_y_continuous(
@@ -546,7 +583,7 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
 }
 
 make_bar_chart <- function(viz_df, x_col, y_col, viz_title = NULL, 
-                     viz_subtitle, viz_caption) {
+                           viz_subtitle, viz_caption) {
   
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
@@ -580,7 +617,7 @@ make_bar_chart <- function(viz_df, x_col, y_col, viz_title = NULL,
 }
 
 make_pct_chg_bar_chart <- function(viz_df, x_col, y_col, viz_title = NULL, 
-                         viz_subtitle, viz_caption) {
+                                   viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
   x_col_quo <- enquo(x_col)
@@ -652,8 +689,8 @@ make_cur_map <- function(viz_df, shp_df, fill_col, geo_col,
 }
 
 make_pct_chg_map <- function(viz_df, shp_df, fill_col, geo_col,
-                         viz_title = NULL, viz_subtitle, 
-                         viz_caption) {
+                             viz_title = NULL, viz_subtitle, 
+                             viz_caption) {
   # Joining data tibble with sf tibble that has `geometry` column that can be mapped
   full_df <- inner_join(viz_df, shp_df)
   
@@ -754,6 +791,9 @@ make_state_scatter <- function(viz_df, x_col, y_col, color_col,
 # Function that writes out data frame as a CSV into specified folder. 
 # Assumes the `df` dataframe has a `dataelement_text` column with the name of 
 # the measure and a `date` column that has an associated date with the data.
+
+#### TODO: Make sure this function conforms with the econanalyzr syntax
+#### and uses dplyr programming to work inside of package.
 econ_csv_write_out <- function(df, folder) {
   
   data_date <- as.character(max(df$date, na.rm = T))
@@ -773,6 +813,8 @@ econ_csv_write_out <- function(df, folder) {
   on.exit(expr = message(paste("Writing out", filename)), add = T)
 }
 
+#### TODO: Make sure this function conforms with the econanalyzr syntax
+#### and uses dplyr programming to work inside of package.
 save_chart <- function(plt) {
   
   bsky_width <- 600

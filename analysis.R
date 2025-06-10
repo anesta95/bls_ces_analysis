@@ -77,23 +77,18 @@ ref_code_df_list <- map(table_names, function(x){
 # Adding code columns from the `series_id` for each data aspect.
 # Code locations from `series_id` referenced from here:
 # https://www.bls.gov/help/hlpforma.htm#CE
-ces_raw_codes <- ces_raw %>% 
+# Adding CES data frame with code columns to the front of the list of code
+# title reference data frames.
+full_ce_df_list <- ces_raw %>% 
   mutate(
     seasonal_code = str_sub(series_id, 3, 3),
     industry_code = str_sub(series_id, 4, 11),
     data_type_code = str_sub(series_id, 12, 13),
     date = base::as.Date(paste0(year, "-", str_sub(period, 2, 3), "-01")),
     value = as.numeric(value)
-  )
-
-# Adding CES data frame with code columns to the front of the list of code
-# title reference data frames.
-full_ce_df_list <- list_flatten(
-  list(
-    ces_raw_codes,
-    ref_code_df_list
-  )
-)
+  ) %>% 
+  list(., ref_code_df_list) %>% 
+  list_flatten()
 
 # Iteratively joining each code title reference file onto main data frame with
 # `dplyr::reduce()`
