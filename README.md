@@ -55,8 +55,6 @@ Data and visualization files will be named in the following order:
 9.  `viz_type_text`
 
 #### Examples
-
-_These need to be updated with new data variables_
 * CSV file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.csv`
 * PNG file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.png`
 

@@ -98,7 +98,9 @@ ces_full <- reduce(full_ce_df_list, left_join) %>%
       data_type_text,
       ",\\s+THOUSANDS"
       )
-    )
+    ),
+    geo_entity_type_text = "nation",
+    geo_entity_text = "us"
   ) %>% 
   rename(industry_text = industry_name,
          data_element_text = data_type_text)
