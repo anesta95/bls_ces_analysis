@@ -27,14 +27,15 @@ This project currently analyzes the following [data estimates](https://www.bls.g
 ### Data conventions
 Every econ analysis data CSV file at minimum will have the following columns:
 * `date`: The date associated with the data in the data row. The date will be in `YYYY-MM-DD` format regardless of the time period the date captures. All dates will be the first day of the time period. For example, data for April 2025 will be displayed as `2025-04-01`. Data for Q2 2025 will be `2025-04-01`. Data for the year 2025 will be `2025-01-01`. This will have a data type `double` with a class of `Date`.
-* `date_period_text`: The time period that each row of the data captures. The most common formats are `monthly`, `quarterly`, and `annually`. This will have a data type and class of `character`.
+* `date_period_text`: The time period that each row of the data captures. The most common formats are `Monthly`, `Quarterly`, and `Annually`. This will have a data type and class of `character`.
 * `value`: The value that is being measured in the data. This will have a data type of `double` and a class of `numeric`.
-* `data_element_text`: What the data in the `value` column is measuring. This will have a data type and class of `character`.
-* `metric_text`: The mathematical expression the data in the `value` column is expressed as. The most common are `level`, `rate`, `ratio`, `percentage`, `proportion`, and `index`. This will have a data type and class of `character`.
-* `date_measure_text`: The change in dates measured by the data in the `value` column. The most common are `current`, `year-over-year`, `month-over-month` and `quarter-over-quarter`. This will have a data type and class of `character`.
+* `data_element_text`: What the data in the `value` column describes. This will have a data type and class of `character`.
+* `data_measure_text`: The mathematical expression the data in the `value` column is expressed as. The most common are `Level`, `Rate`, `Ratio`, `Percentage`, `Proportion`, and `Index`. This will have a data type and class of `character`.
+* `date_measure_text`: The change in dates measured by the data in the `value` column. The most common are `Current`, `Year-over-year`, `Month-over-month` and `Quarter-over-quarter`. This will have a data type and class of `character`.
+* `data_transform_text`: Any mathematical transformations applied to the data. The most common are `Raw`, `Percent change`, `Annualized`, `Trail N` where `N` is a number of periods in the `date_period_text` column. There can be multiple transformations for each row. Transformations are delimited by semi-colons `;` and are stated _in order of transformation_. For example, `Trail 3;Percent Change` will be the percentage change between the trailing 3 period average of the current period — denoted in the `date` column — and the trailing 3 period average of the previous period which is deduced from the `date_measure_text`. Conversely, `Percent Change;Trail 3` will be the trailing 3 period average applied to the percentage change between the current period and the previous period. This will have a data type and class of `character`.
 * `geo_entity_type_text`: The geographic entity _type_ the data in the `value` column is covering. This will have a data type and class of `character`. If the region is in the United States there is a good chance it will be within the [Census Bureau Geographic Entity Hierarchy](https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf).
 * `geo_entity_text`: The name(s) geographic entity/entities that are described by the data.
-* `viz_type_text`: The type of visualization made by the data in the `value` column. The most common are `time series line`, `bar`, `map`, and `scatter`. This will have a data type and class of `character`.
+* `viz_type_text`: The type of visualization made by the data in the `value` column. The most common are `Time series line`, `Bar`, `Map`, and `Scatter`. This will have a data type and class of `character`.
 
 ### Naming conventions
 All graphics are PNG files in the `charts` directory. Every data visualization 
@@ -47,13 +48,15 @@ Data and visualization files will be named in the following order:
 1. `date`
 2. `date_period_text`
 3. `data_element_text`
-4. `metric_text`
+4. `data_measure_text`
 5. `date_measure_text`
-6. `geo_entity_type_text`
-7. `geo_entity_text`
-8. _Any other aspects of the data specific to the release that are needed to uniquely identify it._ Examples include `industry_text`, `size_class_text`, `seas_adj_text`, among others.
-9.  `viz_type_text`
+6. `data_transform_text`
+7. `geo_entity_type_text`
+8. `geo_entity_text`
+9. _Any other aspects of the data specific to the release that are needed to uniquely identify it._ Examples include `industry_text`, `size_class_text`, `seas_adj_text`, among others.
+10. `viz_type_text`
 
+_This now again needs to be updated_
 #### Examples
 * CSV file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.csv`
 * PNG file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.png`
