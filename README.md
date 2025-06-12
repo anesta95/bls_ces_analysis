@@ -61,7 +61,7 @@ _This now again needs to be updated_
 * CSV file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.csv`
 * PNG file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.png`
 
-Every column in the dataset with the `_text` suffix will be included in the filename, in addition to the `date` column. Data files will also include columns that have further information that is _not_ needed to uniquely identify the data series. Examples of this include the `value` column or any columns with the `value_` prefix, variables with the `_code` suffix such as `industry_code`, `fips_code`,`preliminary_code`, as well as `moe`, and `moe_level`, among others. 
+Every column in the dataset with the `_text` suffix will be included in the filename, in addition to the `date` column. Data files will also include columns that have further information that is _not_ needed to uniquely identify the data series. Examples of this include the `value` column, variables with the `_code` suffix such as `industry_code`, `fips_code`,`preliminary_code`, as well as `moe`, and `moe_level`, among others. 
 
 This specific repository will have data with the following variables:
 ### Included data
