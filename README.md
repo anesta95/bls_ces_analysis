@@ -45,20 +45,20 @@ data is delimited with a dash `-` and spaces are replaced with underscores `_`.
 Data and visualization files will be named in the following order:
 
 1. `date`
-2. `data_element_text`
-3. `metric_text`
-4. `date_period_text`
+2. `date_period_text`
+3. `data_element_text`
+4. `metric_text`
 5. `date_measure_text`
 6. `geo_entity_type_text`
 7. `geo_entity_text`
 8. _Any other aspects of the data specific to the release that are needed to uniquely identify it._ Examples include `industry_text`, `size_class_text`, `seas_adj_text`, among others.
-9. `viz_type_text`
+9.  `viz_type_text`
 
 #### Examples
 
 _These need to be updated with new data variables_
-* CSV file: `2024-11-01-employment-level-monthly-2_date_measure-total_nonfarm-nation-us-seasonally_adjusted-time_series_line.csv`
-* PNG file: `2024-11-01-employment-level-monthly-2_date_measure-total_nonfarm-nation-us-seasonally_adjusted-time_series_line.png`
+* CSV file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.csv`
+* PNG file: `2024-11-01-employment-level-monthly-2_date_measure-nation-us-total_nonfarm-seasonally_adjusted-time_series_line.png`
 
 Every column in the dataset with the `_text` suffix will be included in the filename, in addition to the `date` column. Data files will also include columns that have further information that is _not_ needed to uniquely identify the data series. Examples of this include the `value` column or any columns with the `value_` prefix, variables with the `_code` suffix such as `industry_code`, `fips_code`,`preliminary_code`, as well as `moe`, and `moe_level`, among others. 
 
