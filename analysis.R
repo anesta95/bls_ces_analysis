@@ -8,6 +8,7 @@ library(lubridate)
 library(ggplot2)
 library(scales)
 library(ggtext)
+library(tidyr)
 
 # Importing R file with custom functions
 source("functions.R")
@@ -45,6 +46,11 @@ naics_supersectors <- c(
 
 # Basic viz caption citation:
 base_viz_caption <- "Seasonally adjusted as of MMM. 'YY\nSource: BLS Current Employment Statistics | Chart: Adrian Nesta"
+
+# Final df columns to select
+final_cols <- c("date", "date_period_text", "value", "data_element_text", "data_measure_text", 
+                "date_measure_text", "data_transform_text", "geo_entity_type_text", "geo_entity_text",
+                "industry_text", "seas_adj_text", "viz_type_text")
 
 ### Data Collection ###
 # Grabbing BLS CES full data file from here:
@@ -99,8 +105,8 @@ ces_full <- reduce(full_ce_df_list, left_join) %>%
       ",\\s+THOUSANDS"
       )
     ),
-    geo_entity_type_text = "nation",
-    geo_entity_text = "us"
+    geo_entity_type_text = "Nation",
+    geo_entity_text = "US"
   ) %>% 
   rename(industry_text = industry_name,
          data_element_text = data_type_text)
@@ -117,46 +123,58 @@ ces_emp_all_naics_yoy_mom_momann_df <- ces_full %>%
   arrange(industry_text, desc(date)) %>% 
   group_by(industry_code, industry_text) %>% 
   mutate(
+    seas_adj_text = str_to_sentence(seasonal_text),
+    date_period_text = "Monthly",
+    data_measure_text = "Level",
     value = value * 1000,
-    yoy_chg = (value / lead(value, n = 12)) - 1,
-    mom_chg_raw = (value - lead(value, n = 1)),
-    mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1) %>% 
-  ungroup()
+    `Year-over-year|Percent change` = (value / lead(value, n = 12)) - 1,
+    `Month-over-month|Raw` = (value - lead(value, n = 1)),
+    `Month-over-month|Percent change;Annualized` = ((value / lead(value, n = 1)) ^ 12) - 1,
+    `Current|Raw` = value) %>% 
+  ungroup() %>% 
+  select(-value) %>% 
+  pivot_longer(cols = contains("|"),
+               names_to = "date_measure_text-data_transform_text",
+               values_to = "value") %>% 
+  separate_wider_delim(cols = `date_measure_text-data_transform_text`,
+                       delim = "|",
+                       names = c("date_measure_text", "data_transform_text"))
+  
 
 ces_emp_ttlnf_yoy_mom_momann_df <- ces_emp_all_naics_yoy_mom_momann_df %>% 
   filter(industry_code == "00000000")
 
 ces_emp_ttlnf_yoy_mom_momann_ts_line_df <- ces_emp_ttlnf_yoy_mom_momann_df %>% 
-  mutate(val_type_text = "ts_line") %>% 
-  select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
-         data_element_text, industry_text, val_type_text)
+  mutate(viz_type_text = "Time series line") %>% 
+  select(all_of(final_cols))
 
 ces_emp_yoy_non_recession_avg <- get_avg_col_val(
-  df = ces_emp_ttlnf_yoy_mom_momann_df,
+  df = filter(ces_emp_ttlnf_yoy_mom_momann_df, date_measure_text == "Year-over-year"),
   dts = recession_dates,
-  val_col = yoy_chg,
+  val_col = value,
   filter_type = "exclusive"
 )
 
 ces_emp_yoy_recession_avg <- get_avg_col_val(
-  df = ces_emp_ttlnf_yoy_mom_momann_df,
+  df = filter(ces_emp_ttlnf_yoy_mom_momann_df, date_measure_text == "Year-over-year"),
   dts = recession_dates,
-  val_col = yoy_chg,
+  val_col = value,
   filter_type = "inclusive"
 )
 
 ces_emp_ttlnf_yoy_mom_momann_ts_line_last_2_yrs_df <- ces_emp_ttlnf_yoy_mom_momann_ts_line_df %>% 
-  filter(date >= max(date) %m-% months(24))
+  filter_recent_dates(24, "month") %>% 
+  filter(str_detect(data_transform_text, "Percent change"))
 
 econ_csv_write_out(ces_emp_ttlnf_yoy_mom_momann_ts_line_last_2_yrs_df,
                    "./data")
 
+### TODO: Need to refactor make_ts_line_chart() function so it can dynamically
+### handle selection of large line and small line as well as line colors
 ces_emp_ttlnf_yoy_momann_ts_line_viz <- make_ts_line_chart(
   viz_df = ces_emp_ttlnf_yoy_mom_momann_ts_line_last_2_yrs_df,
   x_col = date,
-  y_col_one = yoy_chg,
-  second_y_col = T,
-  y_col_two = mom_chg_ann,
+  y_col = value,
   rec_avg_line = ces_emp_yoy_recession_avg,
   non_rec_avg_line = ces_emp_yoy_non_recession_avg,
   y_data_type = "percentage",
@@ -165,7 +183,7 @@ ces_emp_ttlnf_yoy_momann_ts_line_viz <- make_ts_line_chart(
   viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
 )
 
-save_chart(ces_emp_ttlnf_yoy_momann_ts_line_viz)
+save_chart(ces_emp_ttlnf_yoy_momann_ts_line_viz, "./charts/")
 
 # Average Hourly Earnings for total private year-over-year and month-over-month annualized
 ces_earn_priv_yoy_momann_df <- ces_full %>% 

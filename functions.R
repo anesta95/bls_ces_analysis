@@ -12,7 +12,7 @@
 #### write-out functions `econ_csv_write_out()` and `save_chart()`
 make_metadata_vec <- function(df) {
   metadata_vec <- imap_chr(df, function(x, col_name){
-    uniq_col_val <- unique(x)
+    uniq_col_val <- str_replace_all(unique(x), ";", " ")
     
     if (length(uniq_col_val) > 1) {
       num_instances <- length(uniq_col_val)
@@ -60,13 +60,16 @@ get_avg_col_val <- function(df, dts, val_col, filter_type) {
 # with a numeric column named `value`. 
 #### TODO: Make this function more modular to take a variable time period and
 #### uses dplyr functional programming to work inside of packages.
-make_trail_avg_col <- function(df, trail_amount) {
+make_trail_avg_col <- function(df, trail_amount, additional_transformation = F) {
   
   trail_df <- df %>% 
     arrange(desc(date)) %>% 
     mutate(
       value = rollmean(value, {{ trail_amount }}, fill = NA, align = "left"),
-      date_measure_text = paste(date_measure_text, "trail", {{ trail_amount }})
+      data_transform_text = ifelse(additional_transformation, 
+                                   paste0(data_transform_text, ";", "Trail ", {{ trail_amount }}),
+                                   paste("Trail", {{ trail_amount }})
+      )
     )
   
   combo_df <- bind_rows(df, trail_df)
@@ -100,10 +103,10 @@ filter_recent_dates <- function(df, time_amount, time_measure) {
 #### data syntax. Use dplyr functional programming to work inside of packages.
 make_chart_title <- function(viz_df, viz_title) {
   if (is.null(viz_title)) {
-    viz_title <- paste(
+    viz_title <- str_to_title(paste(
       unique(viz_df$data_element_text),
-      unique(viz_df$metric_text) # Change the name of this column to `data_measurement_text`
-    )
+      unique(viz_df$data_measure_text)
+    ))
   } 
   return(viz_title)
 }
@@ -295,8 +298,8 @@ make_ts_line_chart <- function(viz_df, x_col, y_col, rec_avg_line = NULL,
                                viz_title = NULL, viz_subtitle, viz_caption) {
   # TEMPORARY: Creating ad-hoc columns for line size and color
   viz_df <- viz_df %>% 
-    mutate(linewidth = if_else(date_measure_text == "Current", 0.8, 2.75),
-           color = if_else(date_measure_text == "Current", "#a6cee3", "#1f78b4"))
+    mutate(linewidth = if_else(str_detect(data_transform_text, "Annualized"), 0.8, 2.75),
+           color = if_else(str_detect(data_transform_text, "Annualized"), "#a6cee3", "#1f78b4"))
   
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
@@ -815,7 +818,7 @@ econ_csv_write_out <- function(df, folder) {
 
 #### TODO: Make sure this function conforms with the econanalyzr syntax
 #### and uses dplyr programming to work inside of package.
-save_chart <- function(plt) {
+save_chart <- function(plt, folder) {
   
   bsky_width <- 600
   bsky_height <- 335
@@ -837,7 +840,7 @@ save_chart <- function(plt) {
     filename = name_clean,
     plot = plt,
     device = "png",
-    path = "./charts/",
+    path = folder,
     width = bsky_width * 6, # The aspect ratio can be adjusted as necessary.
     height = bsky_height * 6,
     units = "px"
