@@ -185,6 +185,7 @@ ces_emp_ttlnf_yoy_momann_ts_line_viz <- make_ts_line_chart(
 
 save_chart(ces_emp_ttlnf_yoy_momann_ts_line_viz, "./charts/")
 
+#### LEFT OFF HERE 2025-06-13 #####
 # Average Hourly Earnings for total private year-over-year and month-over-month annualized
 ces_earn_priv_yoy_momann_df <- ces_full %>% 
   filter(!is.na(date),
