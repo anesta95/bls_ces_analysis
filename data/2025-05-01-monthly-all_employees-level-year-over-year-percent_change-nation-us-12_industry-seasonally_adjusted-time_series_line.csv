@@ -1,0 +1,301 @@
+date,date_period_text,value,data_element_text,data_measure_text,date_measure_text,data_transform_text,geo_entity_type_text,geo_entity_text,industry_text,seas_adj_text,viz_type_text
+2025-05-01,Monthly,0.03497934589002161,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.015603597165148031,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.015388373229115793,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.012745262451786088,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.01157655533164692,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.010980307676711432,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.010372311387706112,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.005598755832037394,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2025-05-01,Monthly,0.0016025641025640969,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2025-05-01,Monthly,-0.003575211864406791,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2025-05-01,Monthly,-0.004402302742973263,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2025-05-01,Monthly,-0.006848782006381837,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.03478029496731039,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.016762510705983225,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.014134064885496178,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.01305281236582223,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.012764528048370805,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.011336314904684786,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.009724650349650421,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2025-04-01,Monthly,0.006121178586249831,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2025-04-01,Monthly,-0.002296312651799526,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2025-04-01,Monthly,-0.004742547425474308,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2025-04-01,Monthly,-0.006071456371137263,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2025-04-01,Monthly,-0.006349206349206327,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.03467612726024272,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.016279069767441756,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.014463504877228361,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.012531651002102961,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.012163129024564734,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.011160700114908328,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.009396853146853124,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2025-03-01,Monthly,0.007268699595029515,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2025-03-01,Monthly,-0.002385475107125501,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2025-03-01,Monthly,-0.005764137716155138,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2025-03-01,Monthly,-0.007096992227103804,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2025-03-01,Monthly,-0.020408163265306145,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.035633635702529975,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.019911504424778848,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.015630382363072792,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.014676113360323928,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.011979322316256757,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.011711980878398531,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.008767673967285727,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2025-02-01,Monthly,0.008738394320043641,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2025-02-01,Monthly,-0.0029566215083182135,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2025-02-01,Monthly,-0.007002256282579888,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2025-02-01,Monthly,-0.007762402969962889,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2025-02-01,Monthly,-0.012638230647709303,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.0369559371518573,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.021323801306545098,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.018960825810909965,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.016562447186073914,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.014653110047846862,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.012760348680984857,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.009299420521184043,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2025-01-01,Monthly,0.006001091107474155,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2025-01-01,Monthly,-0.0038822958485904557,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2025-01-01,Monthly,-0.008627390020208292,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2025-01-01,Monthly,-0.008766014834794333,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2025-01-01,Monthly,-0.017405063291139222,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.03852383155946315,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.023459686381034794,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.019604448868308255,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.01625465628174738,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.015004782400765082,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.012821002994965802,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.006203645941637248,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-12-01,Monthly,0.0032693984306888524,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-12-01,Monthly,-0.0022061418990469983,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-12-01,Monthly,-0.006076975016880537,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-12-01,Monthly,-0.008161678973960362,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-12-01,Monthly,-0.020408163265306145,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.038727898789027826,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.023376623376623273,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.02051971714893064,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.015585295612400518,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.012498324407478556,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.012437215977038951,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.006151172893136492,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-11-01,Monthly,0.002507905353832829,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-11-01,Monthly,-0.003574738514497522,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-11-01,Monthly,-0.006843988178565907,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-11-01,Monthly,-0.008468834688346916,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-11-01,Monthly,-0.01729559748427678,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.04053318824809571,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.023774145616641817,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.02173251619072447,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.015961962981830613,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.011742908254536166,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.011567275996404058,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-10-01,Monthly,0.003572667360388415,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-10-01,Monthly,4.360148245039497e-4,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-10-01,Monthly,-0.0066999065129323965,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-10-01,Monthly,-0.007266801726415917,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-10-01,Monthly,-0.008483203257550032,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-10-01,Monthly,-0.023510971786833812,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.040954832670255126,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.0270841098273078,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.02284418868253546,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.01665533650577844,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.014005770617937063,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.01266519119321452,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-09-01,Monthly,0.004930384361654161,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-09-01,Monthly,-7.623611413635212e-4,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-09-01,Monthly,-0.005361721967518829,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-09-01,Monthly,-0.006556944199964776,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-09-01,Monthly,-0.014799865455768613,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-09-01,Monthly,-0.025000000000000022,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.03997183979974972,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.024629929095658643,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.024531024531024626,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.018755328218243772,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.012152955639791019,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.011000901713255296,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-08-01,Monthly,0.004481812180801237,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-08-01,Monthly,-0.0021762785636560977,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-08-01,Monthly,-0.00435594275046669,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-08-01,Monthly,-0.007250834944629969,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-08-01,Monthly,-0.01546218487394957,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-08-01,Monthly,-0.028124999999999956,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.042321596982081156,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.025065731814198022,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.024956326428749787,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.022066370167636018,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.012716399925650101,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.010957254665863836,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-07-01,Monthly,0.003748568255180329,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-07-01,Monthly,-0.001788074321697919,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-07-01,Monthly,-0.003046127067014792,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-07-01,Monthly,-0.00654312313367289,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-07-01,Monthly,-0.021659446851049702,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-07-01,Monthly,-0.029595015576323935,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.04547070675147147,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.02466859801597754,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.024606545091181653,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.024172809874849932,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.013113407882158867,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.012182618659911881,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-06-01,Monthly,0.003991531012460525,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-06-01,Monthly,-0.0017423499945551368,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-06-01,Monthly,-0.0029509979032383837,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-06-01,Monthly,-0.007931638913234007,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-06-01,Monthly,-0.023478835978835932,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-06-01,Monthly,-0.02808112324492984,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.04614835665860517,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.027997489014438104,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.02767129323639561,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.02527510316368642,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.01732808239927297,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.014227511663474912,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-05-01,Monthly,0.0035028091836026842,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-05-01,Monthly,-0.0019418983998756856,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-05-01,Monthly,-0.002178886588953044,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-05-01,Monthly,-0.008316554320231151,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-05-01,Monthly,-0.027018121911037918,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-05-01,Monthly,-0.028037383177570097,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.047918741286596234,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.028982946010426724,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.027404148334380984,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.02619786280592895,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.017599223206699932,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.014467104712749368,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-04-01,Monthly,0.003714117116178972,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-04-01,Monthly,-0.0032585925983397157,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-04-01,Monthly,-0.003267262034415186,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-04-01,Monthly,-0.00875465090829508,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-04-01,Monthly,-0.01253918495297801,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-04-01,Monthly,-0.03213114754098356,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.04755434782608692,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.031702457383218974,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.030134913630059268,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.026588397790055174,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.020132595340915937,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.015118804415773512,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.0031496062992126816,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-03-01,Monthly,0.0020810932676633698,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-03-01,Monthly,0,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-03-01,Monthly,-0.004034134988363025,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-03-01,Monthly,-0.008627485328895457,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-03-01,Monthly,-0.03174083769633507,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-02-01,Monthly,0.04704845108804556,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-02-01,Monthly,0.029980486074152823,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-02-01,Monthly,0.02507349126750813,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-02-01,Monthly,0.023782559456398733,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-02-01,Monthly,0.01893570384802734,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-02-01,Monthly,0.014088957094773313,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-02-01,Monthly,1.733042182245903e-4,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-02-01,Monthly,-1.0921799912622099e-4,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-02-01,Monthly,-0.001577287066246047,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-02-01,Monthly,-0.003643410852713136,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-02-01,Monthly,-0.0077502408266924006,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-02-01,Monthly,-0.02916120576671033,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.04617795997106344,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.02938822692512888,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.02411007321383485,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.022994467496542104,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.02237984590925768,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.014659516733428024,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2024-01-01,Monthly,0.0022965879265091083,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2024-01-01,Monthly,2.776717226058434e-4,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2024-01-01,Monthly,-0.0024036597658370074,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2024-01-01,Monthly,-0.003154574132492094,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2024-01-01,Monthly,-0.00574611808053338,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2024-01-01,Monthly,-0.03135205747877201,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.04661581305242768,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.032807401778929934,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.029985838310448765,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.026229092752154015,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.023215523215523115,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.01757188498402562,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.01680748496786233,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.003828902745870222,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-12-01,Monthly,0.0037221275263505937,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-12-01,Monthly,-0.0018620529133369645,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-12-01,Monthly,-0.005572375060330814,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-12-01,Monthly,-0.0404923874311629,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.04508329289988677,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.03234567901234575,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.030258335568070116,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.028102746693794423,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.025004341031429123,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.019230769230769162,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.0158939109007199,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.004270696452036704,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-11-01,Monthly,0.0016709019389424817,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-11-01,Monthly,-0.002946650124069472,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-11-01,Monthly,-0.00605342808264242,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-11-01,Monthly,-0.049275362318840554,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.044233422611801076,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.034035656401944836,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.03351090188305261,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.031287821058765486,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.02931430028039772,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.025422253177781684,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.016938140378005784,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.006031363088057962,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-10-01,Monthly,0.003445755455779409,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-10-01,Monthly,-0.0034234550561798027,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-10-01,Monthly,-0.0036482185826283153,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-10-01,Monthly,-0.04781906300484651,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.04444534973723879,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.04234527687296419,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.03670468000249261,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.029533213644524325,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.028363357608279127,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.0268760907504364,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.018376293864363236,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.009787748817772002,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.0035191637630662687,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-09-01,Monthly,0.0016344956413449907,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-09-01,Monthly,-3.9590023314128864e-4,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-09-01,Monthly,-0.03910795087265673,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.045751633986928164,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.044103234237177436,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.041184202290793115,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.03077317604821128,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.02750525578135954,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.026943284386366617,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.018853646125543078,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.011223591549295753,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.002952972806205656,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.002338998908467227,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-08-01,Monthly,0.0015658709722319308,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-08-01,Monthly,-0.03783958602846049,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.0456026058631922,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.04301412872841448,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.042651698283279416,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.028886891770445455,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.024356053968810132,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.024145049815994968,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.01940554985658194,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.013227513227513255,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.005297545470598575,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.0049218749999999645,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-07-01,Monthly,0.0036577718943775483,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-07-01,Monthly,-0.030371567043618763,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.05254515599343179,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.0508936493852199,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.04301784169104628,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.03170103092783516,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.029741457241005298,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.027479302448476295,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.02309111077563286,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.01368804503808363,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.011569661775787887,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.00853696741854626,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-06-01,Monthly,0.0049530852139942905,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-06-01,Monthly,-0.01850048685491723,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.07000000000000006,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.05301773637871632,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.043221110100091,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.029468786351299014,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.02678369452110574,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.025930499206209268,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.02450425302188397,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.015558321479374193,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.014142083747652245,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.010597378130151602,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Time series line
+2023-05-01,Monthly,0.008675575456517093,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Time series line
+2023-05-01,Monthly,-0.007845701209545641,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Time series line

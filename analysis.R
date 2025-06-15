@@ -185,7 +185,6 @@ ces_emp_ttlnf_yoy_momann_ts_line_viz <- make_ts_line_chart(
 
 save_chart(ces_emp_ttlnf_yoy_momann_ts_line_viz, "./charts/")
 
-#### LEFT OFF HERE 2025-06-13 #####
 # Average Hourly Earnings for total private year-over-year and month-over-month annualized
 ces_earn_priv_yoy_momann_df <- ces_full %>% 
   filter(!is.na(date),
@@ -195,14 +194,25 @@ ces_earn_priv_yoy_momann_df <- ces_full %>%
   ) %>% 
   arrange(desc(date)) %>% 
   mutate(
-    yoy_chg = (value / lead(value, n = 12)) - 1,
-    mom_chg_ann = ((value / lead(value, n = 1)) ^ 12) - 1,
-    val_type_text = "ts_line"
-  ) %>% 
-  select(date, yoy_chg, mom_chg_ann, data_element_text, industry_text, val_type_text)
+    seas_adj_text = str_to_sentence(seasonal_text),
+    date_period_text = "Monthly",
+    data_measure_text = "Level",
+    value = value * 1000,
+    `Year-over-year|Percent change` = (value / lead(value, n = 12)) - 1,
+    `Month-over-month|Percent change;Annualized` = ((value / lead(value, n = 1)) ^ 12) - 1,
+    viz_type_text = "Time Series Line") %>% 
+  ungroup() %>% 
+  select(-value) %>% 
+  pivot_longer(cols = contains("|"),
+               names_to = "date_measure_text-data_transform_text",
+               values_to = "value") %>% 
+  separate_wider_delim(cols = `date_measure_text-data_transform_text`,
+                       delim = "|",
+                       names = c("date_measure_text", "data_transform_text")) %>% 
+  select(all_of(final_cols))
 
 ces_earn_priv_yoy_momann_last_2_yrs_df <- ces_earn_priv_yoy_momann_df %>% 
-  filter(date >= max(date) %m-% months(24))
+  filter_recent_dates(24, "month")
 
 econ_csv_write_out(ces_earn_priv_yoy_momann_last_2_yrs_df,
                    "./data")
@@ -210,40 +220,38 @@ econ_csv_write_out(ces_earn_priv_yoy_momann_last_2_yrs_df,
 ces_earn_priv_yoy_momann_viz <- make_ts_line_chart(
   viz_df = ces_earn_priv_yoy_momann_last_2_yrs_df,
   x_col = date,
-  y_col_one = yoy_chg,
-  second_y_col = T,
-  y_col_two = mom_chg_ann,
+  y_col = value,
   y_data_type = "percentage",
   viz_title = "Change in Average Hourly Earnings",
   viz_subtitle = "<b style=\"color: #a6cee3\">Monthly annualized</b> and <b style = \"color: #1f78b4\">yearly</b> for all private sector workers",
   viz_caption = base_viz_caption
 )
 
-save_chart(ces_earn_priv_yoy_momann_viz)
+save_chart(ces_earn_priv_yoy_momann_viz, "./charts/")
 
 ## Bar Graphs ##
 # Month-over-month raw change in nonfarm payroll employment
 ces_emp_ttlnf_yoy_mom_momann_ts_bar_df <- ces_emp_ttlnf_yoy_mom_momann_df %>% 
-  mutate(val_type_text = "ts_bar") %>% 
-  select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
-         data_element_text, industry_text, val_type_text)
+  mutate(viz_type_text = "Time series bar") %>% 
+  filter(date_measure_text == "Month-over-month", data_transform_text == "Raw") %>% 
+  select(all_of(final_cols))
 
 ces_emp_mom_non_recession_avg <- get_avg_col_val(
-  df = ces_emp_ttlnf_yoy_mom_momann_df,
+  df = filter(ces_emp_ttlnf_yoy_mom_momann_df, date_measure_text == "Month-over-month", data_transform_text == "Raw"),
   dts = recession_dates,
-  val_col = mom_chg_raw,
+  val_col = value,
   filter_type = "exclusive"
 )
 
 ces_emp_mom_recession_avg <- get_avg_col_val(
-  df = ces_emp_ttlnf_yoy_mom_momann_df,
+  df = filter(ces_emp_ttlnf_yoy_mom_momann_df, date_measure_text == "Month-over-month", data_transform_text == "Raw"),
   dts = recession_dates,
-  val_col = mom_chg_raw,
+  val_col = value,
   filter_type = "inclusive"
 )
 
 ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df <- ces_emp_ttlnf_yoy_mom_momann_ts_bar_df %>% 
-  filter(date >= max(date) %m-% months(24))
+  filter_recent_dates(24, "month")
 
 econ_csv_write_out(ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df,
                    "./data")
@@ -251,7 +259,7 @@ econ_csv_write_out(ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df,
 ces_emp_ttlnf_mom_ts_bar_viz <- make_ts_bar_chart(
   viz_df = ces_emp_ttlnf_yoy_mom_momann_ts_bar_last_2_yrs_df,
   x_col = date,
-  y_col_one = mom_chg_raw,
+  y_col = value,
   rec_avg_line = ces_emp_mom_recession_avg,
   non_rec_avg_line = ces_emp_mom_non_recession_avg,
   y_data_type = "number",
@@ -260,7 +268,7 @@ ces_emp_ttlnf_mom_ts_bar_viz <- make_ts_bar_chart(
   viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
 )
 
-save_chart(ces_emp_ttlnf_mom_ts_bar_viz)
+save_chart(ces_emp_ttlnf_mom_ts_bar_viz, "./charts/")
 
 # Year-over-year change in payroll employment by NAICS supersector
 ces_emp_naics_ss_yoy_df <- ces_full %>% 
@@ -271,15 +279,23 @@ ces_emp_naics_ss_yoy_df <- ces_full %>%
   ) %>% 
   arrange(industry_text, desc(date)) %>% 
   filter(date %in% c(max(date, na.rm = T), max(date, na.rm = T) %m-% months(12))) %>%
-  group_by(data_element_text, industry_text) %>% 
+  group_by(data_element_text, industry_text, 
+           geo_entity_type_text, geo_entity_text, seasonal_text) %>% 
   summarize(
     value = (value[date == max(date)] / value[date != max(date)]) - 1,
     date = max(date),
     .groups = "drop",
   ) %>% 
-  relocate(c(date, value), .before = data_element_text) %>%
-  mutate(val_type_text = "yoy_bar") %>% 
-  arrange(desc(value))
+  mutate(
+    date_period_text = "Monthly",
+    data_measure_text = "Level",
+    date_measure_text = "Year-over-year",
+    data_transform_text = "Percent change",
+    seas_adj_text = str_to_sentence(seasonal_text),
+    viz_type_text = "Bar"
+    ) %>% 
+  arrange(desc(value)) %>% 
+  select(all_of(final_cols))
 
 econ_csv_write_out(ces_emp_naics_ss_yoy_df, "./data")
 
@@ -292,17 +308,17 @@ ces_emp_naics_ss_yoy_viz <- make_pct_chg_bar_chart(
   viz_caption = base_viz_caption
 )
 
-save_chart(ces_emp_naics_ss_yoy_viz)
+save_chart(ces_emp_naics_ss_yoy_viz, "./charts/")
 
 # Faceted line graph by NAICS industry
 ces_emp_naics_ss_yoy_mom_momann_ts_line_df <- ces_emp_all_naics_yoy_mom_momann_df %>% 
-  mutate(val_type_text = "ts_line") %>% 
-  select(date, value, yoy_chg, mom_chg_raw, mom_chg_ann, 
-         data_element_text, industry_text, val_type_text)
+  filter(date_measure_text == "Year-over-year") %>% 
+  mutate(viz_type_text = "Time series line") %>% 
+  select(all_of(final_cols))
 
 ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df <- ces_emp_naics_ss_yoy_mom_momann_ts_line_df %>% 
-  arrange(desc(date), desc(yoy_chg)) %>% 
-  filter(date >= max(date) %m-% months(24))
+  arrange(desc(date), desc(value)) %>% 
+  filter_recent_dates(24, "month")
 
 econ_csv_write_out(ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df,
                    "./data")
@@ -319,7 +335,7 @@ ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df <- ces_emp_naics_ss_yoy_mo
 ces_emp_naics_ss_yoy_ts_line_faceted_viz <- make_ts_faceted_line_chart(
   viz_df = ces_emp_naics_ss_yoy_mom_momann_ts_line_last_2_yrs_df,
   x_col = date,
-  y_col_one = yoy_chg,
+  y_col = value,
   facet_col = industry_text,
   y_data_type = "percentage",
   viz_title = "Change in Total Nonfarm Payroll Employment",
@@ -327,7 +343,7 @@ ces_emp_naics_ss_yoy_ts_line_faceted_viz <- make_ts_faceted_line_chart(
   viz_caption = paste("Non-recession average for data since Jan. '39.", base_viz_caption)
 )
 
-save_chart(ces_emp_naics_ss_yoy_ts_line_faceted_viz)
+save_chart(ces_emp_naics_ss_yoy_ts_line_faceted_viz, "./charts/")
 
 # Functionalize this chart and add the following features:
 # 4. How to have lines be one color descending from largest gain/lowest loss to lowest gain/highest

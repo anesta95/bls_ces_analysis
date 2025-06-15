@@ -1,0 +1,26 @@
+date,date_period_text,value,data_element_text,data_measure_text,date_measure_text,data_transform_text,geo_entity_type_text,geo_entity_text,industry_text,seas_adj_text,viz_type_text
+2025-05-01,Monthly,139000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2025-04-01,Monthly,147000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2025-03-01,Monthly,120000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2025-02-01,Monthly,102000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2025-01-01,Monthly,111000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-12-01,Monthly,323000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-11-01,Monthly,261000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-10-01,Monthly,44000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-09-01,Monthly,240000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-08-01,Monthly,71000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-07-01,Monthly,88000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-06-01,Monthly,87000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-05-01,Monthly,193000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-04-01,Monthly,118000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-03-01,Monthly,246000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-02-01,Monthly,222000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2024-01-01,Monthly,119000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-12-01,Monthly,269000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-11-01,Monthly,141000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-10-01,Monthly,186000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-09-01,Monthly,158000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-08-01,Monthly,157000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-07-01,Monthly,148000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-06-01,Monthly,257000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar
+2023-05-01,Monthly,227000,All Employees,Level,Month-over-month,Raw,Nation,US,Total nonfarm,Seasonally adjusted,Time series bar

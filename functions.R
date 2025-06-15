@@ -397,18 +397,18 @@ make_ts_line_chart <- function(viz_df, x_col, y_col, rec_avg_line = NULL,
 }
 
 # Function to make time series bar graph
-make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL, 
+make_ts_bar_chart <- function(viz_df, x_col, y_col, rec_avg_line = NULL, 
                               non_rec_avg_line = NULL, y_data_type,
                               viz_title = NULL, viz_subtitle, viz_caption) {
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
   x_col_quo <- enquo(x_col)
-  y_col_one_quo <- enquo(y_col_one)
+  y_col_quo <- enquo(y_col)
   
   viz_title <- make_chart_title(viz_df, viz_title)
   
   # Getting data range to use for annotation calculations
-  data_range <- get_data_range(pull(viz_df, !!y_col_one_quo))
+  data_range <- get_data_range(pull(viz_df, !!y_col_quo))
   
   latest_date_dte <- max(viz_df$date, na.rm = T)
   earliest_date_dte <- min(viz_df$date, na.rm = T)
@@ -423,14 +423,14 @@ make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL,
   
   # Base plt
   plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo, 
-                                      y = !!y_col_one_quo,
-                                      fill = !!y_col_one_quo)) +
+                                      y = !!y_col_quo,
+                                      fill = !!y_col_quo)) +
     coord_cartesian(
       xlim = c(earliest_date_dte, latest_date_dte),
       clip = "off") +
     geom_col() +
-    geom_text(aes(label = label_number(scale = 1, scale_cut = cut_short_scale())(!!y_col_one_quo), 
-                  vjust = if_else(!!y_col_one_quo > 0, -.15, 1.05)), 
+    geom_text(aes(label = label_number(scale = 1, scale_cut = cut_short_scale())(!!y_col_quo), 
+                  vjust = if_else(!!y_col_quo > 0, -.15, 1.05)), 
               color = "black", 
               size = 4) + 
     scale_fill_steps2(low = "#8c510a", 
@@ -502,13 +502,13 @@ make_ts_bar_chart <- function(viz_df, x_col, y_col_one, rec_avg_line = NULL,
   
 }
 
-make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_data_type,
+make_ts_faceted_line_chart <- function(viz_df, x_col, y_col, facet_col, y_data_type,
                                        viz_title = NULL, viz_subtitle, viz_caption) {
   
   # https://www.tidyverse.org/blog/2018/07/ggplot2-tidy-evaluation/
   # Quoting X and Y variables:
   x_col_quo <- enquo(x_col)
-  y_col_one_quo <- enquo(y_col_one)
+  y_col_quo <- enquo(y_col)
   facet_col_quo <- enquo(facet_col)
   
   viz_title <- make_chart_title(viz_df, viz_title)
@@ -519,9 +519,9 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
   unique_date_vec <- unique(viz_df$date) |> sort()
   
   latest_date_values <- viz_df %>% 
-    arrange(desc(date), desc(!!y_col_one_quo)) %>% 
+    arrange(desc(date), desc(!!y_col_quo)) %>% 
     filter(date == latest_date_dte) %>% 
-    pull(!!y_col_one_quo)
+    pull(!!y_col_quo)
   
   date_axis_breaks <- c(
     first(unique_date_vec),
@@ -536,9 +536,9 @@ make_ts_faceted_line_chart <- function(viz_df, x_col, y_col_one, facet_col, y_da
   
   # Base plt
   plt <- ggplot(viz_df, mapping = aes(x = !!x_col_quo, 
-                                      y = !!y_col_one_quo,
-                                      color = !!y_col_one_quo)) +
-    geom_line(mapping = aes(y = !!y_col_one_quo),
+                                      y = !!y_col_quo,
+                                      color = !!y_col_quo)) +
+    geom_line(mapping = aes(y = !!y_col_quo),
               linewidth = 1.5, 
               lineend = "round",
               linejoin = "bevel") +

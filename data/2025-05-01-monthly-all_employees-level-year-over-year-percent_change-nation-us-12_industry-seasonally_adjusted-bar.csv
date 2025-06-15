@@ -1,0 +1,13 @@
+date,date_period_text,value,data_element_text,data_measure_text,date_measure_text,data_transform_text,geo_entity_type_text,geo_entity_text,industry_text,seas_adj_text,viz_type_text
+2025-05-01,Monthly,0.03497934589002161,All Employees,Level,Year-over-year,Percent change,Nation,US,Private education and health services,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.015603597165148031,All Employees,Level,Year-over-year,Percent change,Nation,US,Leisure and hospitality,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.015388373229115793,All Employees,Level,Year-over-year,Percent change,Nation,US,Construction,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.012745262451786088,All Employees,Level,Year-over-year,Percent change,Nation,US,Other services,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.01157655533164692,All Employees,Level,Year-over-year,Percent change,Nation,US,Government,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.010980307676711432,All Employees,Level,Year-over-year,Percent change,Nation,US,Total nonfarm,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.010372311387706112,All Employees,Level,Year-over-year,Percent change,Nation,US,Financial activities,Seasonally adjusted,Bar
+2025-05-01,Monthly,0.005598755832037394,All Employees,Level,Year-over-year,Percent change,Nation,US,"Trade, transportation, and utilities",Seasonally adjusted,Bar
+2025-05-01,Monthly,0.0016025641025640969,All Employees,Level,Year-over-year,Percent change,Nation,US,Mining and logging,Seasonally adjusted,Bar
+2025-05-01,Monthly,-0.003575211864406791,All Employees,Level,Year-over-year,Percent change,Nation,US,Professional and business services,Seasonally adjusted,Bar
+2025-05-01,Monthly,-0.004402302742973263,All Employees,Level,Year-over-year,Percent change,Nation,US,Information,Seasonally adjusted,Bar
+2025-05-01,Monthly,-0.006848782006381837,All Employees,Level,Year-over-year,Percent change,Nation,US,Manufacturing,Seasonally adjusted,Bar
