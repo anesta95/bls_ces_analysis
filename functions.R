@@ -797,9 +797,9 @@ make_state_scatter <- function(viz_df, x_col, y_col, color_col,
 
 # Function to check date range of data series to implement correct file name syntax
 make_file_name_date <- function(date_vec) {
-  if (unique(date_vec) == 1) {
+  if (length(unique(date_vec)) == 1) {
     data_date <- as.character(max(date_vec, na.rm = T))
-  } else if (unique(date_vec) > 1) {
+  } else if (length(unique(date_vec)) > 1) {
     data_date <- paste(max(date_vec, na.rm = T), min(date_vec, na.rm = T), sep = "_")
   } else {
     stop("Invalid date column")
@@ -836,7 +836,7 @@ save_chart <- function(plt, folder) {
   
   plt_df <- plt$data
   
-  data_date <- make_file_name_date(df$date)
+  data_date <- make_file_name_date(plt_df$date)
   
   data_details <- plt_df %>% 
     select(all_of(matches("_text$"))) %>% 
